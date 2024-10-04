@@ -2,7 +2,7 @@
 # platform :ios, '9.0'
 
 target 'MoviesApp' do
-  # Comment the next line if you don't want to use dynamic frameworks
+  pod 'Alamofire'
   use_frameworks!
 
   # Pods for MoviesApp
