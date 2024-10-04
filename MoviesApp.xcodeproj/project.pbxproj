@@ -96,9 +96,10 @@
 		966432E52CB038FD0073EA89 /* MoviesApp */ = {
 			isa = PBXGroup;
 			children = (
-				966432E62CB038FD0073EA89 /* MoviesAppApp.swift */,
-				966432E82CB038FD0073EA89 /* ContentView.swift */,
-				966432EA2CB038FD0073EA89 /* Item.swift */,
+				966433152CB039920073EA89 /* Data */,
+				966433142CB0398B0073EA89 /* ViewModel */,
+				966433132CB039640073EA89 /* Model */,
+				966433122CB0393A0073EA89 /* UI */,
 				966432EC2CB038FE0073EA89 /* Assets.xcassets */,
 				966432EE2CB038FE0073EA89 /* Preview Content */,
 			);
@@ -128,6 +129,37 @@
 				966433052CB038FF0073EA89 /* MoviesAppUITestsLaunchTests.swift */,
 			);
 			path = MoviesAppUITests;
+			sourceTree = "<group>";
+		};
+		966433122CB0393A0073EA89 /* UI */ = {
+			isa = PBXGroup;
+			children = (
+				966432E62CB038FD0073EA89 /* MoviesAppApp.swift */,
+				966432E82CB038FD0073EA89 /* ContentView.swift */,
+			);
+			path = UI;
+			sourceTree = "<group>";
+		};
+		966433132CB039640073EA89 /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				966432EA2CB038FD0073EA89 /* Item.swift */,
+			);
+			path = Model;
+			sourceTree = "<group>";
+		};
+		966433142CB0398B0073EA89 /* ViewModel */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = ViewModel;
+			sourceTree = "<group>";
+		};
+		966433152CB039920073EA89 /* Data */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Data;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
