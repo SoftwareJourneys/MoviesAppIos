@@ -15,30 +15,18 @@ class MoviesService: MoviesServiceProtocol {
     private let baseURL = APIConstants.baseURL + "/movie"
 
 
-    func getPopularMovies(completion: @escaping (Result<[MovieDto], Error>) -> Void) {
+    func getPopularMovies()async throws -> [MovieDto] {
         let url = "\(baseURL)/popular"
 
-        AF.request(url, method: .get, headers: APIConstants.headers).responseDecodable(of: ResponseDto<MovieDto>.self) { response in
-            switch response.result {
-            case .success(let postMoviesDTO):
-                completion(.success(postMoviesDTO.results))
-            case .failure(let error):
-                completion(.failure(error))
-            }
-        }
+        let response = try await AF.request(url, method: .get, headers: APIConstants.headers).serializingDecodable(ResponseDto<MovieDto>.self).value
+                return response.results
     }
 
 
-    func getTopRatedMovies(completion: @escaping (Result<[MovieDto], Error>) -> Void) {
+    func getTopRatedMovies()async throws -> [MovieDto] {
         let url = "\(baseURL)/top_rated"
 
-        AF.request(url, method: .get, headers: APIConstants.headers).responseDecodable(of: ResponseDto<MovieDto>.self) { response in
-            switch response.result {
-            case .success(let postMoviesDTO):
-                completion(.success(postMoviesDTO.results))
-            case .failure(let error):
-                completion(.failure(error))
-            }
-        }
+        let response = try await AF.request(url, method: .get, headers: APIConstants.headers).serializingDecodable(ResponseDto<MovieDto>.self).value
+                return response.results
     }
 }

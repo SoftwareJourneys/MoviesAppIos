@@ -8,6 +8,6 @@
 import Foundation
 
 protocol MoviesServiceProtocol {
-    func getPopularMovies(completion: @escaping (Result<[MovieDto], Error>) -> Void)
-    func getTopRatedMovies(completion: @escaping (Result<[MovieDto], Error>) -> Void)
+    func getPopularMovies()async throws -> [MovieDto]
+    func getTopRatedMovies()async throws -> [MovieDto]
 }

@@ -8,7 +8,7 @@
 import Foundation
 
 struct MovieUI: Identifiable, Hashable {
-    var id = UUID()
+    var id: Int  = 1
     var image: String
     var title: String
     var rating: String
