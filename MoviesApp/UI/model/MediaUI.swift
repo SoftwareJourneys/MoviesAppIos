@@ -7,7 +7,7 @@
 
 import Foundation
 
-struct MovieUI: Identifiable, Hashable {
+struct MediaUI: Identifiable, Hashable {
     var id: Int  = 1
     var image: String
     var title: String
