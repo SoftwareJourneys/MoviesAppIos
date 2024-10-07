@@ -9,6 +9,8 @@ import Foundation
 
 
 protocol SeriesServiceProtocol {
-    func getPopularSeries(completion: @escaping (Result<[SeriesDto], Error>) -> Void)
-    func getTopRatedSeries(completion: @escaping (Result<[SeriesDto], Error>) -> Void)
+
+    func getPopularSeries() async throws -> [SeriesDto]
+    func getTopRatedSeries() async throws -> [SeriesDto]
+
 }
