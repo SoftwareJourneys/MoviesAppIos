@@ -6,11 +6,15 @@
 //
 
 import Foundation
+import Network
 
 class MediaViewModel: ObservableObject {
     
     let mediaRepository: MediaRepository
+    private var monitor: NWPathMonitor
+    private var queue: DispatchQueue
     
+    @Published var isConnected: Bool = false
     @Published var popularMovies : [MovieUI] = []
     @Published var topRatedMovies : [MovieUI] = []
     @Published var popularSeries : [MovieUI] = []
@@ -20,6 +24,9 @@ class MediaViewModel: ObservableObject {
     
     init(mediaRepository: MediaRepository) {
         self.mediaRepository = mediaRepository
+        self.monitor = NWPathMonitor()
+        self.queue = DispatchQueue(label: "NetworkMonitor")
+        startMonitoring()
     }
     
     func getMedia() {
@@ -28,7 +35,7 @@ class MediaViewModel: ObservableObject {
         fetchPopularSeries()
         fetchTopRatedSeries()
     }
-        
+    
     private func fetchPopularMovies() {
         Task {
             do {
@@ -88,7 +95,18 @@ class MediaViewModel: ObservableObject {
             }
         }
     }
+
     
+    private func startMonitoring() {
+        monitor.pathUpdateHandler = { path in
+            DispatchQueue.main.async {
+                self.isConnected = (path.status == .satisfied)
+            }
+        }
+        monitor.start(queue: queue)
+    }
     
-    
+    deinit {
+        monitor.cancel()
+    }
 }
