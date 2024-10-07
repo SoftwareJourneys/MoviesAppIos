@@ -12,8 +12,7 @@ import SwiftData
 struct MoviesAppApp: App {
     var sharedModelContainer: ModelContainer = {
         let schema = Schema([
-            MovieDB.self,
-            SeriesDB.self
+            Item.self,
         ])
         let modelConfiguration = ModelConfiguration(schema: schema, isStoredInMemoryOnly: false)
 
