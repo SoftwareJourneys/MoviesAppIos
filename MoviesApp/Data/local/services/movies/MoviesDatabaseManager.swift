@@ -3,6 +3,8 @@ import SwiftUI
 
 class MoviesDatabaseManager {
     let container = try! ModelContainer(for: MovieDB.self)
+    
+    static let shared = MoviesDatabaseManager()
 
     @MainActor
     var modelContext: ModelContext {

@@ -3,6 +3,8 @@ import SwiftUI
 
 class SeriesDatabaseManager {
     let container = try! ModelContainer(for: SeriesDB.self)
+    
+    static let shared = SeriesDatabaseManager()
 
     @MainActor
     var modelContext: ModelContext {

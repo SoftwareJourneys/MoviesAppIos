@@ -18,3 +18,24 @@ func moviesDTOToMovieUI(remoteMovies: [MovieDto]) -> [MovieUI] {
         )
     }
 }
+
+func moviesDTOToMovieDB(remoteMovies: [MovieDto], category: MediaCategory) -> [MovieDB] {
+    return remoteMovies.map { dto in
+        MovieDB(
+            id: Int64(dto.id),
+            adult: dto.adult,
+            backdropPath: dto.backdropPath,
+            genreIds: dto.genreIds,
+            originalLanguage: dto.originalLanguage,
+            originalTitle: dto.originalName,
+            overview: dto.overview,
+            popularity: dto.popularity,
+            posterPath: dto.posterPath,
+            releaseDate: dto.firstAirDate,
+            title: dto.name,
+            voteAverage: dto.voteAverage,
+            voteCount: Int64(dto.voteCount),
+            category: category.rawValue
+        )
+    }
+}

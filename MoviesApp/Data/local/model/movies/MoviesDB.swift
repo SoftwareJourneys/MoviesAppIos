@@ -13,12 +13,12 @@ class MovieDB {
     var posterPath: String?
     var releaseDate: String
     var title: String
-    var video: Bool
     var voteAverage: Double
     var voteCount: Int64
     var category: String
 
-    init(id: Int64,
+    init(
+        id: Int64,
          adult: Bool,
          backdropPath: String?,
          genreIds: [Int],
@@ -29,7 +29,6 @@ class MovieDB {
          posterPath: String?,
          releaseDate: String,
          title: String,
-         video: Bool,
          voteAverage: Double,
          voteCount: Int64,
          category: String) {
@@ -44,7 +43,6 @@ class MovieDB {
         self.posterPath = posterPath
         self.releaseDate = releaseDate
         self.title = title
-        self.video = video
         self.voteAverage = voteAverage
         self.voteCount = voteCount
         self.category = category
