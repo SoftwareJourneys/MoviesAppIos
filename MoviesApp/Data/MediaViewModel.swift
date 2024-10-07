@@ -7,18 +7,20 @@
 
 import Foundation
 import Network
+import Combine
 
 class MediaViewModel: ObservableObject {
     
     let mediaRepository: MediaRepository
     private var monitor: NWPathMonitor
     private var queue: DispatchQueue
+    private var cancellables = Set<AnyCancellable>()
     
     @Published var isConnected: Bool = false
-    @Published var popularMovies : [MovieUI] = []
-    @Published var topRatedMovies : [MovieUI] = []
-    @Published var popularSeries : [MovieUI] = []
-    @Published var topRatedSeries : [MovieUI] = []
+    @Published var popularMovies : [MediaUI] = []
+    @Published var topRatedMovies : [MediaUI] = []
+    @Published var popularSeries : [MediaUI] = []
+    @Published var topRatedSeries : [MediaUI] = []
     
     @Published var errorMessage: String?
     
@@ -37,65 +39,57 @@ class MediaViewModel: ObservableObject {
     }
     
     private func fetchPopularMovies() {
-        Task {
-            do {
-                let movies = try await mediaRepository.getListOfMovies(category: .popular)
-                DispatchQueue.main.async {
-                    self.popularMovies = moviesDTOToMovieUI(remoteMovies: movies)
-                }
-            } catch {
-                DispatchQueue.main.async {
+        mediaRepository.getListOfMovies(category: .popular)
+            .receive(on: DispatchQueue.main)
+            .sink(receiveCompletion: { completion in
+                if case .failure(let error) = completion {
                     self.errorMessage = "Error fetching popular movies: \(error.localizedDescription)"
                 }
-            }
-        }
+            }, receiveValue: { movies in
+                self.popularMovies = movies
+            })
+            .store(in: &cancellables)
     }
     
     private func fetchTopRatedMovies() {
-        Task {
-            do {
-                let movies = try await mediaRepository.getListOfMovies(category: .topRated)
-                DispatchQueue.main.async {
-                    self.topRatedMovies = moviesDTOToMovieUI(remoteMovies: movies)
-                }
-            } catch {
-                DispatchQueue.main.async {
+        mediaRepository.getListOfMovies(category: .topRated)
+            .receive(on: DispatchQueue.main)
+            .sink(receiveCompletion: { completion in
+                if case .failure(let error) = completion {
                     self.errorMessage = "Error fetching top-rated movies: \(error.localizedDescription)"
                 }
-            }
-        }
+            }, receiveValue: { movies in
+                self.topRatedMovies = movies
+            })
+            .store(in: &cancellables)
     }
     
     private func fetchPopularSeries() {
-        Task {
-            do {
-                let series = try await mediaRepository.getListOfSeries(category: .popular)
-                DispatchQueue.main.async {
-                    self.popularSeries = SeriesDTOToMovieUI(remoteMovies: series)
+        mediaRepository.getListOfSeries(category: .popular)
+            .receive(on: DispatchQueue.main)
+            .sink(receiveCompletion: { completion in
+                if case .failure(let error) = completion {
+                    self.errorMessage = "Error fetching top-rated movies: \(error.localizedDescription)"
                 }
-            } catch {
-                DispatchQueue.main.async {
-                    self.errorMessage = "Error fetching popular movies: \(error.localizedDescription)"
-                }
-            }
-        }
+            }, receiveValue: { movies in
+                self.popularSeries = movies
+            })
+            .store(in: &cancellables)
     }
     
     private func fetchTopRatedSeries() {
-        Task {
-            do {
-                let series = try await mediaRepository.getListOfSeries(category: .topRated)
-                DispatchQueue.main.async {
-                    self.topRatedSeries = SeriesDTOToMovieUI(remoteMovies: series)
-                }
-            } catch {
-                DispatchQueue.main.async {
+        mediaRepository.getListOfSeries(category: .topRated)
+            .receive(on: DispatchQueue.main)
+            .sink(receiveCompletion: { completion in
+                if case .failure(let error) = completion {
                     self.errorMessage = "Error fetching top-rated movies: \(error.localizedDescription)"
                 }
-            }
-        }
+            }, receiveValue: { movies in
+                self.topRatedSeries = movies
+            })
+            .store(in: &cancellables)
     }
-
+    
     
     private func startMonitoring() {
         monitor.pathUpdateHandler = { path in
@@ -108,5 +102,6 @@ class MediaViewModel: ObservableObject {
     
     deinit {
         monitor.cancel()
+        cancellables.removeAll()
     }
 }

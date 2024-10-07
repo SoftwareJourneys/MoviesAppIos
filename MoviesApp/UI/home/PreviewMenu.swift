@@ -9,7 +9,7 @@ import Foundation
 import SwiftUI
 
 struct PreviewMenu: View {
-    var media: [MovieUI]
+    var media: [MediaUI]
     var body: some View {
         VStack {
             HStack {
