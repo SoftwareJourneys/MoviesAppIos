@@ -30,7 +30,7 @@ class SeriesService: SeriesServiceProtocol {
     }
 
 
-    func getTopRatedSeries(seriesId: Int, completion: @escaping (Result<[SeriesDto], Error>) -> Void) {
+    func getTopRatedSeries(completion: @escaping (Result<[SeriesDto], Error>) -> Void) {
         let url = "\(baseURL)/top_rated"
 
         AF.request(url, method: .get, headers: APIConstants.headers).responseDecodable(of: ResponseDto<SeriesDto>.self) { response in
