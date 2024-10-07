@@ -11,7 +11,7 @@ import SwiftUI
 @MainActor
 struct PopularMediaSponsor: View {
     
-    var movie: MovieUI?
+    var movie: MediaUI?
     
     var body: some View {
         ZStack {

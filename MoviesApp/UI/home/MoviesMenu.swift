@@ -10,7 +10,7 @@ import SwiftUI
 
 struct MoviesMenu: View {
     var menuTitle: String
-    var media: [MovieUI]
+    var media: [MediaUI]
 
     var body: some View {
         VStack {

@@ -7,9 +7,9 @@
 
 import Foundation
 
-func moviesDTOToMovieUI(remoteMovies: [MovieDto]) -> [MovieUI] {
+func moviesDTOToMediaUI(remoteMovies: [MovieDto]) -> [MediaUI] {
     return remoteMovies.map { remoteMovie in
-        MovieUI(
+        MediaUI(
             id: remoteMovie.id,
             image: "https://image.tmdb.org/t/p/w500/" + remoteMovie.posterPath,
             title: remoteMovie.name,
@@ -18,6 +18,8 @@ func moviesDTOToMovieUI(remoteMovies: [MovieDto]) -> [MovieUI] {
         )
     }
 }
+
+
 
 func moviesDTOToMovieDB(remoteMovies: [MovieDto], category: MediaCategory) -> [MovieDB] {
     return remoteMovies.map { dto in
@@ -36,6 +38,32 @@ func moviesDTOToMovieDB(remoteMovies: [MovieDto], category: MediaCategory) -> [M
             voteAverage: dto.voteAverage,
             voteCount: Int64(dto.voteCount),
             category: category.rawValue
+        )
+    }
+}
+
+func movieDBToMediaUI(remoteMovie: MovieDB?) -> MediaUI? {
+    guard let remoteMovie = remoteMovie else {
+        return nil
+    }
+
+    return MediaUI(
+        id: Int(remoteMovie.id),
+        image: "https://image.tmdb.org/t/p/w500/" + (remoteMovie.backdropPath ?? ""),
+        title: remoteMovie.title,
+        rating: String(remoteMovie.voteAverage),
+        date: remoteMovie.releaseDate
+    )
+}
+
+func moviesDBToMediaUI(localMovies: [MovieDB]) -> [MediaUI] {
+    return localMovies.map { localMovie in
+        MediaUI(
+            id: Int(localMovie.id),
+            image: "https://image.tmdb.org/t/p/w500/" + (localMovie.posterPath ?? ""),
+            title: localMovie.title,
+            rating: String(localMovie.voteAverage),
+            date: localMovie.releaseDate
         )
     }
 }

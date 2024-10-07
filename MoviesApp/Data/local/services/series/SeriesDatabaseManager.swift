@@ -12,7 +12,7 @@ class SeriesDatabaseManager {
     }
 
     @MainActor
-    func saveMovies(series: [SeriesDB]) {
+    func saveSeries(series: [SeriesDB]) {
         for serie in series {
             modelContext.insert(serie)
         }
@@ -30,8 +30,24 @@ class SeriesDatabaseManager {
         }
         let fetchDescriptor = FetchDescriptor<SeriesDB>(predicate: seriePredicate,
                                                      sortBy: [SortDescriptor<SeriesDB>(\.name)])
-        let series = try! modelContext.fetch(fetchDescriptor)
-        return series
+        let series = try? modelContext.fetch(fetchDescriptor)
+        return series ?? []
+    }
+    
+    @MainActor
+    func getSerieById(id: Int64) -> SeriesDB? {
+        let idPredicate = #Predicate<SeriesDB> { serie in
+            serie.id == id
+        }
+        let fetchDescriptor = FetchDescriptor<SeriesDB>(predicate: idPredicate)
+        
+        do {
+            let series = try modelContext.fetch(fetchDescriptor)
+            return series.first
+        } catch {
+            print("Error fetching series by id: \(error)")
+            return nil
+        }
     }
 
 }
