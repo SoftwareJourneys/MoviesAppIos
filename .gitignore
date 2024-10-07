@@ -16,5 +16,3 @@ Pods/
 # Misc
 *.swp
 .DS_Store
-*.xcuserstate
-*.xcworkspace/xcuserdata/
