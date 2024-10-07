@@ -10,6 +10,7 @@ import SwiftUI
 
 struct MoviesMenu: View {
     var menuTitle: String
+    var media: [MovieUI]
 
     var body: some View {
         VStack {
@@ -21,8 +22,7 @@ struct MoviesMenu: View {
             }
             ScrollView(.horizontal, showsIndicators: false) {
                 HStack(spacing: 24) {
-                    let movies = previewMokedMovies
-                    ForEach(movies) { movie in
+                    ForEach(media) { movie in
                         VStack {
                             AsyncImage(url: URL(string: movie.image)) { image in
                                 image

@@ -10,17 +10,22 @@ import SwiftUI
 
 @MainActor
 struct HomeScreen: View {
+    
+    @StateObject private var viewModel = MediaViewModel(mediaRepository: MediaRepository.shared)
+    
     var menuTitle: String = "Continue watching"
     var body: some View {
         ScrollView {
             VStack {
-                PopularMediaSponsor()
-                PreviewMenu()
-                MoviesMenu(menuTitle: "Top rated movies")
-                MoviesMenu(menuTitle: "Favorite movies")
-                MoviesMenu(menuTitle: "Top rated series")
-                MoviesMenu(menuTitle: "Favorite series")
+                PopularMediaSponsor(movie: viewModel.popularMovies.first)
+                PreviewMenu(media: viewModel.popularSeries)
+                MoviesMenu(menuTitle: "Top rated movies", media: viewModel.topRatedMovies)
+                MoviesMenu(menuTitle: "Popular Movies", media: viewModel.popularMovies)
+                MoviesMenu(menuTitle: "Top rated series", media: viewModel.topRatedSeries)
+                MoviesMenu(menuTitle: "Popular series", media: viewModel.popularSeries)
             }
+        }.onAppear{
+            viewModel.getMedia()
         }
     }
 }

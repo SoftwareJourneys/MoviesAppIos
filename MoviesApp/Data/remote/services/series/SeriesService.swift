@@ -16,30 +16,18 @@ class SeriesService: SeriesServiceProtocol {
     private let baseURL = APIConstants.baseURL + "/tv"
 
 
-    func getPopularSeries(completion: @escaping (Result<[SeriesDto], Error>) -> Void) {
+    func getPopularSeries() async throws -> [SeriesDto] {
         let url = "\(baseURL)/popular"
 
-        AF.request(url, method: .get, headers: APIConstants.headers).responseDecodable(of: ResponseDto<SeriesDto>.self) { response in
-            switch response.result {
-            case .success(let response):
-                completion(.success(response.results))
-            case .failure(let error):
-                completion(.failure(error))
-            }
-        }
+        let response = try await AF.request(url, method: .get, headers: APIConstants.headers).serializingDecodable(ResponseDto<SeriesDto>.self).value
+                return response.results
     }
 
 
-    func getTopRatedSeries(seriesId: Int, completion: @escaping (Result<[SeriesDto], Error>) -> Void) {
+    func getTopRatedSeries() async throws -> [SeriesDto] {
         let url = "\(baseURL)/top_rated"
 
-        AF.request(url, method: .get, headers: APIConstants.headers).responseDecodable(of: ResponseDto<SeriesDto>.self) { response in
-            switch response.result {
-            case .success(let response):
-                completion(.success(response.results))
-            case .failure(let error):
-                completion(.failure(error))
-            }
-        }
+        let response = try await AF.request(url, method: .get, headers: APIConstants.headers).serializingDecodable(ResponseDto<SeriesDto>.self).value
+                return response.results
     }
 }
