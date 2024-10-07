@@ -25,6 +25,7 @@ class SeriesService: SeriesServiceProtocol {
 
 
     func getTopRatedSeries() async throws -> [SeriesDto] {
+
         let url = "\(baseURL)/top_rated"
 
         let response = try await AF.request(url, method: .get, headers: APIConstants.headers).serializingDecodable(ResponseDto<SeriesDto>.self).value
