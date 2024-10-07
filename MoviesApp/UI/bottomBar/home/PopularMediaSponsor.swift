@@ -1,8 +1,9 @@
-import Foundation
 import SwiftUI
 
 @MainActor
 struct popularMediaSponsor: View {
+    @State private var showAlert = false
+    
     var body: some View {
         ZStack {
             AsyncImage(url: URL(string: mockedMovies[0].image)) { image in
@@ -32,13 +33,19 @@ struct popularMediaSponsor: View {
 
                     Text("TV Shows")
                         .foregroundColor(.white)
+                        .padding(.leading, 30)
 
                     Text("Movies")
                         .foregroundColor(.white)
+                        .padding(.leading, 30)
 
                     Text("My List")
                         .foregroundColor(.white)
+                        .padding(.leading, 30)
+
+                    Spacer()
                 }
+                .frame(maxWidth: .infinity)
                 .padding()
 
                 Spacer()
@@ -63,6 +70,10 @@ struct popularMediaSponsor: View {
                             .foregroundColor(.white)
                     }
                     Button(action: {
+                        showAlert = true
+                        DispatchQueue.main.asyncAfter(deadline: .now() + 3) {
+                            showAlert = false
+                        }
                     }) {
                         HStack {
                             Image(systemName: "play.fill")
@@ -75,6 +86,13 @@ struct popularMediaSponsor: View {
                         .padding(.vertical, 10)
                         .background(Color.white)
                         .cornerRadius(5)
+                    }
+                    .alert(isPresented: $showAlert) {
+                        Alert(
+                            title: Text("Warning"),
+                            message: Text("Not playable movie"),
+                            dismissButton: .default(Text("OK"))
+                        )
                     }
                     VStack {
                         Image(systemName: "info.circle")
