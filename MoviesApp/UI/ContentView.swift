@@ -12,7 +12,6 @@ struct ContentView: View {
     @StateObject private var mediaViewModel = MediaViewModel()
     
     var body: some View {
-
         ZStack {
             HomeBar()
                 .preferredColorScheme(.dark)
@@ -20,6 +19,7 @@ struct ContentView: View {
             VStack {
                 OfflineMessage()
                 Spacer()
+                ErrorMessage()
             }
         }
         .environmentObject(mediaViewModel)
