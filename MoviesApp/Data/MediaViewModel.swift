@@ -8,10 +8,11 @@
 import Foundation
 import Network
 import Combine
+import Factory
 
 class MediaViewModel: ObservableObject {
     
-    let mediaRepository: MediaRepository
+    @Injected(\.mediaRepository) private var mediaRepository: MediaRepository
     private var monitor: NWPathMonitor
     private var queue: DispatchQueue
     private var cancellables = Set<AnyCancellable>()
@@ -24,8 +25,7 @@ class MediaViewModel: ObservableObject {
     
     @Published var errorMessage: String?
     
-    init(mediaRepository: MediaRepository) {
-        self.mediaRepository = mediaRepository
+    init() {
         self.monitor = NWPathMonitor()
         self.queue = DispatchQueue(label: "NetworkMonitor")
         startMonitoring()

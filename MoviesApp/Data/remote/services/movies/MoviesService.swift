@@ -10,8 +10,6 @@ import Alamofire
 
 class MoviesService: MoviesServiceProtocol {
 
-    static let shared = MoviesService()
-
     private let baseURL = APIConstants.baseURL + "/movie"
 
 

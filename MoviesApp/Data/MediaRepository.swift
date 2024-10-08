@@ -11,13 +11,6 @@ import Network
 
 class MediaRepository {
     
-    static let shared = MediaRepository(
-        movieService: MoviesService.shared,
-        seriesService: SeriesService.shared,
-        seriesDB: SeriesDatabaseManager.shared,
-        moviesDB: MoviesDatabaseManager.shared
-    )
-    
     let movieService: MoviesServiceProtocol
     let seriesService: SeriesServiceProtocol
     let moviesDB: MoviesDatabaseManager
