@@ -10,20 +10,28 @@ import SwiftUI
 
 @MainActor
 struct HomeScreen: View {
-
-
+    
+    
     @EnvironmentObject var viewModel: MediaViewModel
-
+    
     var body: some View {
         NavigationView {
             ScrollView {
                 PopularMediaSponsor(movie: viewModel.popularMovies.first)
-                MoviesMenu(menuTitle: "Top rated movies", media: viewModel.topRatedMovies)
-                MoviesMenu(menuTitle: "Popular Movies", media: viewModel.popularMovies)
-                MoviesMenu(menuTitle: "Top rated series", media: viewModel.topRatedSeries)
-                MoviesMenu(menuTitle: "Popular series", media: viewModel.popularSeries)
+                MoviesMenu(menuTitle: "Top rated movies", media: viewModel.topRatedMovies, loadMoreAction: {
+                    viewModel.fetchTopRatedMovies()
+                })
+                MoviesMenu(menuTitle: "Popular Movies", media: viewModel.popularMovies, loadMoreAction: {
+                    viewModel.fetchPopularMovies()
+                })
+                MoviesMenu(menuTitle: "Top rated series", media: viewModel.topRatedSeries, loadMoreAction: {
+                    viewModel.fetchTopRatedSeries()
+                })
+                MoviesMenu(menuTitle: "Popular series", media: viewModel.popularSeries, loadMoreAction: {
+                    viewModel.fetchPopularSeries()
+                })
             }
         }
     }
 }
-	
+
