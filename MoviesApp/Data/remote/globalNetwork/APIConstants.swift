@@ -9,10 +9,29 @@ import Foundation
 import Alamofire
 
 struct APIConstants {
-    static let baseURL = "https://api.themoviedb.org/3"
-
     static let headers: HTTPHeaders = [
-        "accept": "application/json",
-        "Authorization": "Bearer eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiJjZDc3OTM3Nzc2MTg1MmMxMWZhNzJhNjdkOTM3ZjE4ZSIsIm5iZiI6MTcyNDk2MzYxOC44NDgzNjMsInN1YiI6IjY2ZDBkYTFlOGUzNzgwZTEwNzZkZTJjNCIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.9-v4_kcF9vIDuiSJTYfmTjNm8qDuRr6MqEiq-7mvqBg"
+        APIStrings.accept.rawValue: APIStrings.acceptValue.rawValue,
+        APIStrings.authorization.rawValue : apiKey
     ]
+    
+    
+    private static var apiKey: String {
+        return getValue(for: .apiKey)
+    }
+    
+    public static var baseURL: String {
+        return getValue(for: .apiUrl)
+    }
+    
+    private static func getValue(for key: APIStrings) -> String {
+        return Bundle.main.object(forInfoDictionaryKey: key.rawValue) as? String ?? ""
+    }
+}
+
+enum APIStrings : String, Codable{
+    case apiKey = "API_KEY"
+    case apiUrl = "API_URL"
+    case accept = "accept"
+    case acceptValue = "application/json"
+    case authorization  = "Authorization"
 }

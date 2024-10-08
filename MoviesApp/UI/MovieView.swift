@@ -12,7 +12,8 @@ struct MovieView: View {
     var movie: MediaUI
 
     var body: some View {
-        NavigationLink(destination: DetailedView(movieTitle: movie.title)) {
+       
+        NavigationLink(destination: DetailedView(previewMovieId: movie.id, isSerie: viewModel.isSerie(movie: movie))) {
             VStack {
                 AsyncImage(url: URL(string: movie.image)) { phase in
                     if let image = phase.image {
@@ -21,6 +22,7 @@ struct MovieView: View {
                             .aspectRatio(contentMode: .fill)
                             .frame(width: 100, height: 160)
                             .clipShape(Rectangle())
+
                     } else if phase.error != nil {
                         VStack {
                             ZStack {
@@ -57,3 +59,4 @@ struct MovieView: View {
         }
     }
 }
+

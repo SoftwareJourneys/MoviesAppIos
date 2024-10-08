@@ -13,16 +13,16 @@ class MoviesService: MoviesServiceProtocol {
     private let baseURL = APIConstants.baseURL + "/movie"
 
 
-    func getPopularMovies()async throws -> [MovieDto] {
-        let url = "\(baseURL)/popular"
+    func getPopularMovies(page: Int)async throws -> [MovieDto] {
+        let url = "\(baseURL)/popular?page=\(page)"
 
         let response = try await AF.request(url, method: .get, headers: APIConstants.headers).serializingDecodable(ResponseDto<MovieDto>.self).value
                 return response.results
     }
 
 
-    func getTopRatedMovies()async throws -> [MovieDto] {
-        let url = "\(baseURL)/top_rated"
+    func getTopRatedMovies(page: Int)async throws -> [MovieDto] {
+        let url = "\(baseURL)/top_rated?page=\(page)"
 
         let response = try await AF.request(url, method: .get, headers: APIConstants.headers).serializingDecodable(ResponseDto<MovieDto>.self).value
                 return response.results

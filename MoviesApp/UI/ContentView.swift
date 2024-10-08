@@ -20,6 +20,7 @@ struct ContentView: View {
             VStack {
                 OfflineMessage()
                 Spacer()
+                ErrorMessage()
             }
         }
         .environmentObject(mediaViewModel)

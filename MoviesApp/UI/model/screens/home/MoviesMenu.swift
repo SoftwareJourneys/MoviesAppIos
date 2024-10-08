@@ -12,7 +12,8 @@ struct MoviesMenu: View {
     @EnvironmentObject var viewModel: MediaViewModel
     var menuTitle: String
     var media: [MediaUI]
-
+    var loadMoreAction: () -> Void
+    
     var body: some View {
         VStack {
             HStack {
