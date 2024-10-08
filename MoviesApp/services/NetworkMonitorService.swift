@@ -18,6 +18,12 @@ class NetworkMonitorService: ObservableObject {
         monitor = NWPathMonitor()
         startMonitoring()
     }
+    
+    // Just for testing
+    init(isConnected: Bool) {
+            self.monitor = NWPathMonitor()
+            self.isConnected = isConnected
+        }
 
     private func startMonitoring() {
         monitor.pathUpdateHandler = { [weak self] path in
