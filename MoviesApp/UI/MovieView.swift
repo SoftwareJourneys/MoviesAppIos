@@ -24,13 +24,6 @@ struct MovieView: View {
                     ProgressView()
                         .frame(width: 100, height: 160)
                 }
-                Text(movie.title)
-                    .font(.title3)
-                    .foregroundColor(.white)
-                    .multilineTextAlignment(.center)
-                    .frame(width: 100)
-                    .lineLimit(1)
-                    .truncationMode(.tail)
             }
         }
     }
