@@ -19,6 +19,7 @@ struct OfflineMessage: View {
                     .padding()
                     .background(Color.gray)
                     .cornerRadius(8)
+                    .font(.caption)
             }
         }
         .animation(.default, value: viewModel.isConnected)

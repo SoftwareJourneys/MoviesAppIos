@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct MovieView: View {
-  @EnvironmentObject var viewModel: MediaViewModel
+    @EnvironmentObject var viewModel: MediaViewModel
     var movie: MediaUI
 
     var body: some View {
@@ -16,23 +16,20 @@ struct MovieView: View {
         NavigationLink(destination: DetailedView(previewMovieId: movie.id, isSerie: viewModel.isSerie(movie: movie))) {
             VStack {
                 AsyncImage(url: URL(string: movie.image)) { phase in
-                    switch phase {
-                    case .empty:
-                        ProgressView()
-                            .frame(width: 100, height: 160)
-                    case .success(let image):
+                    if let image = phase.image {
                         image
                             .resizable()
                             .aspectRatio(contentMode: .fill)
                             .frame(width: 100, height: 160)
                             .clipShape(Rectangle())
-                    case .failure:
-                        GeometryReader { geometry in
+
+                    } else if phase.error != nil {
+                        VStack {
                             ZStack {
                                 Image(systemName: "photo")
                                     .resizable()
                                     .aspectRatio(contentMode: .fit)
-                                    .frame(width: geometry.size.width * 0.8, height: geometry.size.height * 0.8)
+                                    .frame(width: 80, height: 70)
                                     .foregroundColor(.gray)
 
                                 Image(systemName: "xmark.circle.fill")
@@ -40,20 +37,23 @@ struct MovieView: View {
                                     .aspectRatio(contentMode: .fit)
                                     .frame(width: 30, height: 30)
                                     .foregroundColor(.red)
-                                    .offset(x: geometry.size.width * 0.4, y: -geometry.size.height * 0.4 + 35)
+                                    .offset(x: 35, y: -30)
+                            }
+                            .frame(width: 100, height: 100)
+
+                            if !viewModel.isConnected {
+                                Text(movie.title)
+                                    .font(.caption)
+                                    .foregroundColor(.white)
+                                    .lineLimit(1)
+                                    .truncationMode(.tail)
+                                    .frame(width: 100)
                             }
                         }
-                        .frame(width: 100, height: 160)
-                    @unknown default:
-                        EmptyView()
+                    } else {
+                        ProgressView()
+                            .frame(width: 100, height: 160)
                     }
-                }
-
-                if !viewModel.isConnected {
-                    Text(movie.title)
-                        .font(.caption)
-                        .foregroundColor(.black)
-                        .padding(.top, 8)
                 }
             }
         }
