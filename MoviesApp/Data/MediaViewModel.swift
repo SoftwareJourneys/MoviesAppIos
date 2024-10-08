@@ -26,6 +26,11 @@ class MediaViewModel: ObservableObject {
     
     @Published var errorMessage: String?
     
+    var pageTopRatedMovies = 1
+    var pagePopularMovies = 1
+    var pageTopRatedSeries = 1
+    var pagePopularSeries = 1
+    
     init() {
         setupNetworkMonitoring()
     }
@@ -37,48 +42,89 @@ class MediaViewModel: ObservableObject {
         fetchTopRatedSeries()
     }
     
-    private func fetchPopularMovies() {
-        mediaRepository.getListOfMovies(category: .popular)
+    func fetchPopularMovies() {
+        mediaRepository.getListOfMovies(category: .popular, page: self.pagePopularMovies)
             .receive(on: DispatchQueue.main)
             .sink(receiveCompletion: { completion in
-                self.handleCompletion(completion: completion, errorMessage: "Error fetching popular movies")
+                self.handleCompletion(
+                    completion: completion,
+                    errorMessage: "Error fetching popular movies",
+                    onFinished: {self.pagePopularMovies+=1}
+                )
             }, receiveValue: { movies in
-                self.popularMovies = movies
-            })
-            .store(in: &cancellables)
-    }
-    
-    private func fetchTopRatedMovies() {
-        mediaRepository.getListOfMovies(category: .topRated)
-            .receive(on: DispatchQueue.main)
-            .sink(receiveCompletion: { completion in
-                self.handleCompletion(completion: completion, errorMessage: "Error fetching top-rated movies")
-            }, receiveValue: { movies in
-                self.topRatedMovies = movies
-            })
-            .store(in: &cancellables)
-    }
-    
-    private func fetchPopularSeries() {
-        mediaRepository.getListOfSeries(category: .popular)
-            .receive(on: DispatchQueue.main)
-            .sink(receiveCompletion: { completion in
-                if case .failure(let error) = completion {
-                    self.errorMessage = "Error fetching top-rated movies: \(error.localizedDescription)"
+                if(self.pagePopularMovies == 1){
+                    self.popularMovies = movies
+                } else {
+                    self.popularMovies.append(contentsOf: movies)
                 }
-            }, receiveValue: { movies in
-                self.popularSeries = movies
             })
             .store(in: &cancellables)
     }
     
-    private func fetchTopRatedSeries() {
-        mediaRepository.getListOfSeries(category: .topRated)
+    func fetchTopRatedMovies() {
+        mediaRepository.getListOfMovies(
+            category: .topRated,
+            page: self.pageTopRatedMovies
+        )
+        .receive(on: DispatchQueue.main)
+        .sink(receiveCompletion: { completion in
+            self.handleCompletion(
+                completion: completion,
+                errorMessage: "Error fetching top-rated movies",
+                onFinished: {self.pageTopRatedMovies+=1}
+            )
+        }, receiveValue: { movies in
+            if(self.pageTopRatedMovies == 1){
+                self.topRatedMovies = movies
+            } else {
+                self.topRatedMovies.append(contentsOf: movies)
+            }
+        })
+        .store(in: &cancellables)
+    }
+    
+    func fetchPopularSeries() {
+        mediaRepository.getListOfSeries(
+            category: .popular,
+            page: self.pagePopularSeries
+        )
+        .receive(on: DispatchQueue.main)
+        .sink(receiveCompletion: { completion in
+            self.handleCompletion(
+                completion: completion,
+                errorMessage: "Error fetching popular series",
+                onFinished: {
+                    self.pagePopularSeries+=1
+                }
+            )
+        }, receiveValue: { series in
+            
+            if(self.pagePopularSeries == 1){
+                self.popularSeries = series
+            } else {
+                self.popularSeries.append(contentsOf: series)
+            }
+        })
+        .store(in: &cancellables)
+    }
+    
+    func fetchTopRatedSeries() {
+        mediaRepository.getListOfSeries(category: .topRated, page: self.pageTopRatedSeries)
             .receive(on: DispatchQueue.main)
             .sink(receiveCompletion: { completion in
-                self.handleCompletion(completion: completion, errorMessage: "Error fetching top-rated series")
+                self.handleCompletion(
+                    completion: completion,
+                    errorMessage: "Error fetching top-rated series",
+                    onFinished: {
+                        self.pageTopRatedSeries+=1
+                    }
+                )
             }, receiveValue: { series in
-                self.topRatedSeries = series
+                if(self.pageTopRatedSeries == 1){
+                    self.topRatedSeries = series
+                } else {
+                    self.topRatedSeries.append(contentsOf: series)
+                }
             })
             .store(in: &cancellables)
     }
@@ -89,10 +135,15 @@ class MediaViewModel: ObservableObject {
             .assign(to: &$isConnected)
     }
     
-    private func handleCompletion(completion: Subscribers.Completion<Error>, errorMessage: String) {
+    private func handleCompletion(
+        completion: Subscribers.Completion<Error>,
+        errorMessage: String,
+        onFinished: () -> Void
+    ) {
         switch completion {
         case .finished:
             print("Request completed successfully.")
+            onFinished()
         case .failure(let error):
             if let urlError = error as? URLError {
                 switch urlError.code {
