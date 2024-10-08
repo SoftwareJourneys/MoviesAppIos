@@ -19,6 +19,7 @@ struct ErrorMessage: View {
                     .padding()
                     .background(Color.gray)
                     .cornerRadius(8)
+                    .font(.caption)
                     .onAppear {
                         DispatchQueue.main.asyncAfter(deadline: .now() + 5) {
                             withAnimation {

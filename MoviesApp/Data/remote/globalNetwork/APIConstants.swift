@@ -9,10 +9,17 @@ import Foundation
 import Alamofire
 
 struct APIConstants {
-    static let baseURL = "https://api.themoviedb.org/3"
-
     static let headers: HTTPHeaders = [
         "accept": "application/json",
-        "Authorization": "Bearer eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiJjZDc3OTM3Nzc2MTg1MmMxMWZhNzJhNjdkOTM3ZjE4ZSIsIm5iZiI6MTcyNDk2MzYxOC44NDgzNjMsInN1YiI6IjY2ZDBkYTFlOGUzNzgwZTEwNzZkZTJjNCIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.9-v4_kcF9vIDuiSJTYfmTjNm8qDuRr6MqEiq-7mvqBg"
+        "Authorization": "\(apiKey)"
     ]
+    
+    
+    private static var apiKey: String {
+        return Bundle.main.object(forInfoDictionaryKey: "API_KEY") as? String ?? ""
+    }
+    
+    public static var baseURL: String {
+        return Bundle.main.object(forInfoDictionaryKey: "API_URL") as? String ?? ""
+    }
 }
