@@ -8,6 +8,6 @@
 import Foundation
 
 protocol MoviesServiceProtocol {
-    func getPopularMovies()async throws -> [MovieDto]
-    func getTopRatedMovies()async throws -> [MovieDto]
+    func getPopularMovies(page: Int)async throws -> [MovieDto]
+    func getTopRatedMovies(page: Int)async throws -> [MovieDto]
 }

@@ -11,7 +11,8 @@ import SwiftUI
 struct MoviesMenu: View {
     var menuTitle: String
     var media: [MediaUI]
-
+    var loadMoreAction: () -> Void
+    
     var body: some View {
         VStack {
             HStack {
@@ -25,6 +26,13 @@ struct MoviesMenu: View {
                 HStack {
                     ForEach(media) { movie in
                         MovieView(movie: movie)
+                    }
+                    if(!media.isEmpty){
+                        Button(action: {
+                            loadMoreAction()
+                        }) {
+                            Text("See more")
+                        }
                     }
                 }
                 .padding(.horizontal)
