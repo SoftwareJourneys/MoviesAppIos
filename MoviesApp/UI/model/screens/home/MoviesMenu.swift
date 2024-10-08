@@ -4,6 +4,8 @@
 //
 //  Created by Work on 10/7/24.
 //
+
+import Foundation
 import SwiftUI
 
 struct MoviesMenu: View {

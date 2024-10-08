@@ -31,10 +31,10 @@ struct PopularMediaSponsor: View {
                             Image("NetflixLogo")
                                 .resizable()
                                 .aspectRatio(contentMode: .fit)
-                                .frame(width: 100, height: 100) // Ajusta el tamaño del logo aquí
-                                .padding(.top, 40) // Ajusta el espacio superior según necesites
+                                .frame(width: 100, height: 100) 
+                                .padding(.top, 40) 
                         }
-                        .frame(width: UIScreen.main.bounds.width, height: 300) // Mantiene el frame de 300 de altura
+                        .frame(width: UIScreen.main.bounds.width, height: 300) 
                         .clipped()
                         .alignmentGuide(.top) { _ in 0 }
                     @unknown default:

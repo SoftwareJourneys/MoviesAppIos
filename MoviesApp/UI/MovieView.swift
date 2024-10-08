@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct MovieView: View {
-    @StateObject private var viewModel = MediaViewModel(mediaRepository: MediaRepository.shared)
+  @EnvironmentObject var viewModel: MediaViewModel
     var movie: MediaUI
 
     var body: some View {
@@ -58,5 +58,4 @@ struct MovieView: View {
         }
     }
 }
-
 

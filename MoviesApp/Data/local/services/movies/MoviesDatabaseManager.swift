@@ -1,16 +1,18 @@
 import SwiftData
 import SwiftUI
+import Combine
 
 class MoviesDatabaseManager {
-    let container = try! ModelContainer(for: MovieDB.self)
+    let modelContainer: ModelContainer
+    let modelExecutor: any ModelExecutor
+    let modelContext: ModelContext
     
-    static let shared = MoviesDatabaseManager()
-
-    @MainActor
-    var modelContext: ModelContext {
-        container.mainContext
+    init(modelContainer: ModelContainer) {
+        self.modelContainer = modelContainer
+        modelContext = ModelContext(modelContainer)
+        modelExecutor = DefaultSerialModelExecutor(modelContext: modelContext)
     }
-
+    
     @MainActor
     func saveMovies(movies: [MovieDB]) {
         for movie in movies {

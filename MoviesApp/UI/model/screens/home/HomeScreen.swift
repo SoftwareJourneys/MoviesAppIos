@@ -11,7 +11,8 @@ import SwiftUI
 @MainActor
 struct HomeScreen: View {
 
-    @StateObject private var viewModel = MediaViewModel(mediaRepository: MediaRepository.shared)
+
+    @EnvironmentObject var viewModel: MediaViewModel
 
     var body: some View {
         NavigationView {

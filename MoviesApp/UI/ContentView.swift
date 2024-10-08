@@ -9,12 +9,20 @@ import SwiftUI
 import SwiftData
 
 struct ContentView: View {
-    @Environment(\.modelContext) private var modelContext
-    @Query private var items: [Item]
-
+    @StateObject private var mediaViewModel = MediaViewModel()
+    
     var body: some View {
-        HomeBar()
-            .preferredColorScheme(.dark)
+
+        ZStack {
+            HomeBar()
+                .preferredColorScheme(.dark)
+            
+            VStack {
+                OfflineMessage()
+                Spacer()
+            }
+        }
+        .environmentObject(mediaViewModel)
     }
 }
 
