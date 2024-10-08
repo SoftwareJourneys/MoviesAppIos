@@ -10,7 +10,7 @@ import Foundation
 
 protocol SeriesServiceProtocol {
 
-    func getPopularSeries() async throws -> [SeriesDto]
-    func getTopRatedSeries() async throws -> [SeriesDto]
+    func getPopularSeries(page: Int) async throws -> [SeriesDto]
+    func getTopRatedSeries(page: Int) async throws -> [SeriesDto]
 
 }
