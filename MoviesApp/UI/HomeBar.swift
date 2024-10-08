@@ -38,6 +38,5 @@ struct HomeBar: View {
                     Label("More", systemImage: "ellipsis")
                 }
         }
-        .accentColor(.white)
     }
 }

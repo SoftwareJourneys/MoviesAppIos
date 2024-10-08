@@ -14,31 +14,44 @@ struct PopularMediaSponsor: View {
     var body: some View {
         ZStack {
             if let movie = movie, let imageUrl = URL(string: movie.image) {
-                AsyncImage(url: URL(string: movie.image)) { image in
-                    image
-                        .resizable()
-                        .aspectRatio(contentMode: .fill)
-                        .frame(width: UIScreen.main.bounds.width, height: 300)
+                AsyncImage(url: imageUrl) { phase in
+                    switch phase {
+                    case .empty:
+                        ProgressView()
+                            .frame(width: 80, height: 80)
+                    case .success(let image):
+                        image
+                            .resizable()
+                            .aspectRatio(contentMode: .fill)
+                            .frame(width: UIScreen.main.bounds.width, height: 300)
+                            .clipped()
+                            .alignmentGuide(.top) { _ in 0 }
+                    case .failure:
+                        VStack {
+                            Image("NetflixLogo")
+                                .resizable()
+                                .aspectRatio(contentMode: .fit)
+                                .frame(width: 100, height: 100) // Ajusta el tamaño del logo aquí
+                                .padding(.top, 40) // Ajusta el espacio superior según necesites
+                        }
+                        .frame(width: UIScreen.main.bounds.width, height: 300) // Mantiene el frame de 300 de altura
                         .clipped()
                         .alignmentGuide(.top) { _ in 0 }
-                } placeholder: {
-                    ProgressView()
-                        .frame(width: 80, height: 80)
+                    @unknown default:
+                        EmptyView()
+                    }
                 }
                 .ignoresSafeArea()
             }
+
+
+
             VStack {
                 HStack {
-                    AsyncImage(url: URL(string: "https://loodibee.com/wp-content/uploads/Netflix-N-Symbol-logo.png")) { image in
-                        image
-                            .resizable()
-                            .aspectRatio(contentMode: .fit)
-                            .frame(width: 40, height: 40)
-                    } placeholder: {
-                        ProgressView()
-                            .frame(width: 40, height: 40)
-                    }
-
+                    Image("NetflixLogo")
+                        .resizable()
+                        .aspectRatio(contentMode: .fit)
+                        .frame(width: 40, height: 40)
                     Text("TV Shows")
                         .foregroundColor(.white)
                         .padding(.leading, 30)

@@ -4,8 +4,6 @@
 //
 //  Created by Work on 10/7/24.
 //
-
-import Foundation
 import SwiftUI
 
 struct MoviesMenu: View {
@@ -22,7 +20,7 @@ struct MoviesMenu: View {
                 Spacer()
             }
             ScrollView(.horizontal, showsIndicators: false) {
-                HStack() {
+                HStack {
                     ForEach(media) { movie in
                         MovieView(movie: movie)
                     }
