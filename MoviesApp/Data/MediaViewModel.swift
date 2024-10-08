@@ -12,7 +12,7 @@ import Factory
 
 class MediaViewModel: ObservableObject {
     
-    @Injected(\.mediaRepository) private var mediaRepository: MediaRepository
+    @Injected(\.mediaRepository) var mediaRepository: MediaRepository
     private var monitor: NWPathMonitor
     private var queue: DispatchQueue
     private var cancellables = Set<AnyCancellable>()

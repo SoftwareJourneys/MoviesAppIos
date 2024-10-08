@@ -12,7 +12,8 @@ struct MovieView: View {
     var movie: MediaUI
 
     var body: some View {
-        NavigationLink(destination: DetailedView(movieTitle: movie.title)) {
+       
+        NavigationLink(destination: DetailedView(previewMovieId: movie.id)) {
             VStack {
                 AsyncImage(url: URL(string: movie.image)) { image in
                     image
