@@ -37,7 +37,16 @@ class MediaRepository {
         
         Task {
             let localMovies = await moviesDB.getMoviesByCategory(category: category.rawValue)
-            let localMediaUI = moviesDBToMediaUI(localMovies: localMovies)
+            var sortedMovies: [MovieDB] = []
+            
+            switch category{
+            case .popular:
+                sortedMovies = localMovies.sorted { $0.popularity > $1.popularity }
+            case .topRated:
+                sortedMovies = localMovies.sorted { $0.voteAverage > $1.voteAverage }
+            }
+            
+            let localMediaUI = moviesDBToMediaUI(localMovies: sortedMovies)
             movieSubject.send(localMediaUI)
             
             if networkMonitor.isConnected {
@@ -72,7 +81,17 @@ class MediaRepository {
         
         Task {
             let localSeries = await seriesDB.getSeriesByCategory(category: category.rawValue)
-            let localMediaUI = seriesDBToMediaUI(localSeries: localSeries)
+            
+            var sortedSeries: [SeriesDB] = []
+            
+            switch category{
+            case .popular:
+                sortedSeries = localSeries.sorted { $0.popularity > $1.popularity }
+            case .topRated:
+                sortedSeries = localSeries.sorted { $0.voteAverage > $1.voteAverage }
+            }
+            
+            let localMediaUI = seriesDBToMediaUI(localSeries: sortedSeries)
             seriesSubject.send(localMediaUI)
             
             if networkMonitor.isConnected {
@@ -103,12 +122,4 @@ class MediaRepository {
         }
     }
     
-    func getMovieById(id: Int) async throws -> MediaUI? {
-        await movieDBToMediaUI(remoteMovie: moviesDB.getMovieById(id: Int64(id)))
-    }
-    
-    func getSerieById(id: Int)async throws -> MediaUI? {
-        await seriesDBToMediaUI(remoteSerie:seriesDB.getSerieById(id: Int64(id)))
-        
-    }
 }
