@@ -71,8 +71,16 @@ extension Container {
                 movieService: self.moviesService(),
                 seriesService: self.seriesService(),
                 seriesDB: self.seriesDb(),
-                moviesDB: self.moviesDb()
+                moviesDB: self.moviesDb(),
+                networkMonitor: self.networkMonitoring()
             )
+        }
+    }
+    
+    // Services
+    var networkMonitoring: Factory<NetworkMonitorService> {
+        self {
+            NetworkMonitorService()
         }
     }
     

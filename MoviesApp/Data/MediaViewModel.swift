@@ -13,8 +13,9 @@ import Factory
 class MediaViewModel: ObservableObject {
     
     @Injected(\.mediaRepository) private var mediaRepository: MediaRepository
-    private var monitor: NWPathMonitor
-    private var queue: DispatchQueue
+    @Injected(\.networkMonitoring) private var networkMonitor: NetworkMonitorService
+    
+
     private var cancellables = Set<AnyCancellable>()
     
     @Published var isConnected: Bool = false
@@ -26,9 +27,7 @@ class MediaViewModel: ObservableObject {
     @Published var errorMessage: String?
     
     init() {
-        self.monitor = NWPathMonitor()
-        self.queue = DispatchQueue(label: "NetworkMonitor")
-        startMonitoring()
+        setupNetworkMonitoring()
     }
     
     func getMedia() {
@@ -91,17 +90,13 @@ class MediaViewModel: ObservableObject {
     }
     
     
-    private func startMonitoring() {
-        monitor.pathUpdateHandler = { path in
-            DispatchQueue.main.async {
-                self.isConnected = (path.status == .satisfied)
-            }
-        }
-        monitor.start(queue: queue)
-    }
+    private func setupNetworkMonitoring() {
+           networkMonitor.$isConnected
+               .receive(on: DispatchQueue.main)
+               .assign(to: &$isConnected)
+       }
     
     deinit {
-        monitor.cancel()
         cancellables.removeAll()
     }
 }
