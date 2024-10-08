@@ -1,16 +1,20 @@
 PODS:
   - Alamofire (5.9.1)
+  - Factory (2.3.2)
 
 DEPENDENCIES:
   - Alamofire
+  - Factory
 
 SPEC REPOS:
   trunk:
     - Alamofire
+    - Factory
 
 SPEC CHECKSUMS:
   Alamofire: f36a35757af4587d8e4f4bfa223ad10be2422b8c
+  Factory: 3a9d0809910130d609b34d4554828e6ecce519ff
 
-PODFILE CHECKSUM: e11e991155c439c6b75a9819c32b05e5c28aa578
+PODFILE CHECKSUM: 5f5ab3c6d8ccf454a199dfc74d1618ea139dd016
 
-COCOAPODS: 1.14.3
+COCOAPODS: 1.15.2
