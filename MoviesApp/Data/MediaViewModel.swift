@@ -15,7 +15,7 @@ class MediaViewModel: ObservableObject {
     @Injected(\.mediaRepository) private var mediaRepository: MediaRepository
     @Injected(\.networkMonitoring) private var networkMonitor: NetworkMonitorService
     
-    
+
     private var cancellables = Set<AnyCancellable>()
     
     @Published var isConnected: Bool = false
@@ -118,6 +118,18 @@ class MediaViewModel: ObservableObject {
     
     private func logError(errorLocalization : String) {
         print("\(errorLocalization) \(self.errorMessage ?? "Unknown error")")
+    }
+    
+    func getMovieById(id: Int) async throws -> MediaUI{
+        return try await mediaRepository.getMovieById(id: id) ?? MediaUI(image: "", title: "", rating: "", date: "")
+    }
+    
+    func getSerieById(id: Int) async throws -> MediaUI{
+        return try await mediaRepository.getSerieById(id: id) ?? MediaUI(image: "", title: "", rating: "", date: "")
+    }
+    
+    func isSerie(movie:MediaUI) -> Bool{
+        return !(!popularSeries.contains(movie) && !topRatedSeries.contains(movie))
     }
     
     deinit {
