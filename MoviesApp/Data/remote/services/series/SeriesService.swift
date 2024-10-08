@@ -11,8 +11,6 @@ import Alamofire
 
 class SeriesService: SeriesServiceProtocol {
 
-    static let shared = SeriesService()
-
     private let baseURL = APIConstants.baseURL + "/tv"
 
 
