@@ -36,23 +36,33 @@ class MediaRepository {
         let movieSubject = PassthroughSubject<[MediaUI], Error>()
         
         Task {
+            var saveIntoDB = false
+            
             let localMovies = await moviesDB.getMoviesByCategory(category: category.rawValue)
-            var sortedMovies: [MovieDB] = []
             
-            switch category{
-            case .popular:
-                sortedMovies = localMovies.sorted { $0.popularity > $1.popularity }
-            case .topRated:
-                sortedMovies = localMovies.sorted { $0.voteAverage > $1.voteAverage }
+            if(!localMovies.isEmpty){
+                var sortedMovies: [MovieDB] = []
+                switch category{
+                case .popular:
+                    sortedMovies = localMovies.sorted { $0.popularity > $1.popularity }
+                case .topRated:
+                    sortedMovies = localMovies.sorted { $0.voteAverage > $1.voteAverage }
+                }
+                
+                let localMediaUI = moviesDBToMediaUI(localMovies: sortedMovies)
+                movieSubject.send(localMediaUI)
+            } else {
+                saveIntoDB = true
             }
-            
-            let localMediaUI = moviesDBToMediaUI(localMovies: sortedMovies)
-            movieSubject.send(localMediaUI)
             
             if networkMonitor.isConnected {
                 do {
                     let remoteMovies = try await self.getMovies(for: category)
-                    await self.moviesDB.saveMovies(movies: moviesDTOToMovieDB(remoteMovies: remoteMovies, category: category))
+                    
+                    if(saveIntoDB){
+                        await self.moviesDB.saveMovies(movies: moviesDTOToMovieDB(remoteMovies: remoteMovies, category: category))
+                    }
+                    
                     let remoteMediaUI = moviesDTOToMediaUI(remoteMovies: remoteMovies)
                     movieSubject.send(remoteMediaUI)
                     movieSubject.send(completion: .finished)
@@ -80,25 +90,33 @@ class MediaRepository {
         let seriesSubject = PassthroughSubject<[MediaUI], Error>()
         
         Task {
+            var saveIntoDB = false
+            
             let localSeries = await seriesDB.getSeriesByCategory(category: category.rawValue)
             
-            var sortedSeries: [SeriesDB] = []
-            
-            switch category{
-            case .popular:
-                sortedSeries = localSeries.sorted { $0.popularity > $1.popularity }
-            case .topRated:
-                sortedSeries = localSeries.sorted { $0.voteAverage > $1.voteAverage }
+            if(!localSeries.isEmpty){
+                var sortedSeries: [SeriesDB] = []
+                
+                switch category{
+                case .popular:
+                    sortedSeries = localSeries.sorted { $0.popularity > $1.popularity }
+                case .topRated:
+                    sortedSeries = localSeries.sorted { $0.voteAverage > $1.voteAverage }
+                }
+                
+                let localMediaUI = seriesDBToMediaUI(localSeries: sortedSeries)
+                seriesSubject.send(localMediaUI)
+            } else {
+                saveIntoDB = true
             }
-            
-            let localMediaUI = seriesDBToMediaUI(localSeries: sortedSeries)
-            seriesSubject.send(localMediaUI)
             
             if networkMonitor.isConnected {
                 do {
                     // Observe network to check if we call remote
                     let remoteSeries = try await getSeries(for: category)
-                    await seriesDB.saveSeries(series: seriesDTOToMovieDB(remoteSeries: remoteSeries, category: category))
+                    if(saveIntoDB){
+                        await seriesDB.saveSeries(series: seriesDTOToMovieDB(remoteSeries: remoteSeries, category: category))
+                    }
                     let remoteMediaUI = SeriesDTOToMediaUI(remoteSeries: remoteSeries)
                     seriesSubject.send(remoteMediaUI)
                     seriesSubject.send(completion: .finished)
