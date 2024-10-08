@@ -13,16 +13,16 @@ class MediaRepository {
     
     let movieService: MoviesServiceProtocol
     let seriesService: SeriesServiceProtocol
-    let moviesDB: MoviesDatabaseManager
-    let seriesDB: SeriesDatabaseManager
+    let moviesDB: MoviesDatabaseProtocol
+    let seriesDB: SeriesDatabaseProtocol
     let networkMonitor: NetworkMonitorService
     
     
     init(
         movieService: MoviesServiceProtocol,
         seriesService: SeriesServiceProtocol,
-        seriesDB: SeriesDatabaseManager,
-        moviesDB: MoviesDatabaseManager,
+        seriesDB: SeriesDatabaseProtocol,
+        moviesDB: MoviesDatabaseProtocol,
         networkMonitor: NetworkMonitorService
     ) {
         self.movieService = movieService

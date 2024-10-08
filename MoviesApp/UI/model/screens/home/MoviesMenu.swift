@@ -29,6 +29,13 @@ struct MoviesMenu: View {
                         ForEach(media) { movie in
                             MovieView(movie: movie)
                         }
+                        
+                        Button(action: {
+                            loadMoreAction()
+                        }) {
+                            Text("See more")
+                        }
+                        .padding(.horizontal)
                     }
                     .padding(.horizontal)
                 } else {
@@ -36,12 +43,19 @@ struct MoviesMenu: View {
                         ForEach(media) { movie in
                             MovieView(movie: movie)
                         }
+                        
+                        Button(action: {
+                            loadMoreAction()
+                        }) {
+                            Text("See more")
+                        }
+                        .padding(.horizontal)
                     }
-                    .padding(.horizontal)
+                }
+                
                 }
             }
+            .frame(alignment: .topLeading)
+            .padding()
         }
-        .frame(alignment: .topLeading)
-        .padding()
     }
-}
