@@ -15,7 +15,6 @@ struct MoreScreen: View {
     var body: some View {
         NavigationView {
             List {
-                // Sección de perfil de usuario
                 Section(header: Text("User Profile").foregroundColor(.white)) {
                     HStack {
                         Image(systemName: "person.circle.fill")
@@ -62,7 +61,6 @@ struct MoreScreen: View {
                     }
                     
                     Button(action: {
-                        print("Help tapped")
                     }) {
                         HStack {
                             Image(systemName: "questionmark.circle")
@@ -73,7 +71,6 @@ struct MoreScreen: View {
                     }
                     
                     Button(action: {
-                        print("Sign Out tapped")
                     }) {
                         HStack {
                             Image(systemName: "arrow.right.square")

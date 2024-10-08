@@ -8,6 +8,7 @@ import SwiftUI
 
 @MainActor
 struct PopularMediaSponsor: View {
+    @EnvironmentObject var viewModel: MediaViewModel
     @State private var showAlert = false
     var movie: MediaUI?
 
@@ -15,36 +16,47 @@ struct PopularMediaSponsor: View {
         ZStack {
             if let movie = movie, let imageUrl = URL(string: movie.image) {
                 AsyncImage(url: imageUrl) { phase in
-                    switch phase {
-                    case .empty:
-                        ProgressView()
-                            .frame(width: 80, height: 80)
-                    case .success(let image):
-                        image
-                            .resizable()
-                            .aspectRatio(contentMode: .fill)
+                    if viewModel.isConnected {
+                        switch phase {
+                        case .empty:
+                            ProgressView()
+                                .frame(width: 80, height: 80)
+                        case .success(let image):
+                            image
+                                .resizable()
+                                .aspectRatio(contentMode: .fill)
+                                .frame(width: UIScreen.main.bounds.width, height: 300)
+                                .clipped()
+                                .alignmentGuide(.top) { _ in 0 }
+                        case .failure:
+                            VStack {
+                                Image("NetflixLogo")
+                                    .resizable()
+                                    .aspectRatio(contentMode: .fit)
+                                    .frame(width: 100, height: 100)
+                                    .padding(.top, 40)
+                            }
                             .frame(width: UIScreen.main.bounds.width, height: 300)
                             .clipped()
                             .alignmentGuide(.top) { _ in 0 }
-                    case .failure:
+                        @unknown default:
+                            EmptyView()
+                        }
+                    } else {
                         VStack {
                             Image("NetflixLogo")
                                 .resizable()
                                 .aspectRatio(contentMode: .fit)
-                                .frame(width: 100, height: 100) 
-                                .padding(.top, 40) 
+                                .frame(width: 100, height: 100)
+                                .padding(.top, 40)
                         }
-                        .frame(width: UIScreen.main.bounds.width, height: 300) 
+                        .frame(width: UIScreen.main.bounds.width, height: 300)
                         .clipped()
                         .alignmentGuide(.top) { _ in 0 }
-                    @unknown default:
-                        EmptyView()
                     }
                 }
                 .ignoresSafeArea()
             }
-
-
 
             VStack {
                 HStack {
@@ -55,15 +67,12 @@ struct PopularMediaSponsor: View {
                     Text("TV Shows")
                         .foregroundColor(.white)
                         .padding(.leading, 30)
-
                     Text("Movies")
                         .foregroundColor(.white)
                         .padding(.leading, 30)
-
                     Text("My List")
                         .foregroundColor(.white)
                         .padding(.leading, 30)
-
                     Spacer()
                 }
                 .frame(maxWidth: .infinity)
@@ -108,13 +117,6 @@ struct PopularMediaSponsor: View {
                         .background(Color.white)
                         .cornerRadius(5)
                     }
-                    .alert(isPresented: $showAlert) {
-                        Alert(
-                            title: Text("Warning"),
-                            message: Text("Not playable movie"),
-                            dismissButton: .default(Text("OK"))
-                        )
-                    }
                     VStack {
                         Image(systemName: "info.circle")
                             .foregroundColor(.white)
@@ -128,6 +130,15 @@ struct PopularMediaSponsor: View {
             .frame(maxWidth: .infinity)
             .background(LinearGradient(gradient: Gradient(colors: [.clear, .black]), startPoint: .top, endPoint: .bottom))
             .ignoresSafeArea(edges: .bottom)
+            .overlay(
+                CustomAlert(
+                    showAlert: $showAlert,
+                    title: "Warning",
+                    message: "No playable movie",
+                    confirmText: "OK"
+                )
+            )
         }
     }
 }
+
