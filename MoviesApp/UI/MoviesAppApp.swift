@@ -1,9 +1,3 @@
-//
-//  MoviesAppApp.swift
-//  MoviesApp
-//
-//  Created by Work on 10/4/24.
-//
 
 import SwiftUI
 import SwiftData
