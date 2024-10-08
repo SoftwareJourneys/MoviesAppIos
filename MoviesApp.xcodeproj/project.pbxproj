@@ -9,6 +9,8 @@
 /* Begin PBXBuildFile section */
 		6C05CC0A8C00D3927D0707B1 /* Pods_MoviesAppTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5FE79AF8DC5ECDF255DFE717 /* Pods_MoviesAppTests.framework */; };
 		9656D9BF2CB56D7300BA44A5 /* AppInjection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9656D9BE2CB56D7300BA44A5 /* AppInjection.swift */; };
+		9656D9C22CB577A300BA44A5 /* OfflineMessage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9656D9C12CB577A300BA44A5 /* OfflineMessage.swift */; };
+		9656D9C52CB57C4900BA44A5 /* NetworkMonitorService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9656D9C42CB57C4900BA44A5 /* NetworkMonitorService.swift */; };
 		966432E72CB038FD0073EA89 /* MoviesAppApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 966432E62CB038FD0073EA89 /* MoviesAppApp.swift */; };
 		966432E92CB038FD0073EA89 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 966432E82CB038FD0073EA89 /* ContentView.swift */; };
 		966432EB2CB038FD0073EA89 /* Item.swift in Sources */ = {isa = PBXBuildFile; fileRef = 966432EA2CB038FD0073EA89 /* Item.swift */; };
@@ -75,6 +77,8 @@
 		5FE79AF8DC5ECDF255DFE717 /* Pods_MoviesAppTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_MoviesAppTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		796C56E44C36B8ACEAACC634 /* Pods-MoviesApp.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MoviesApp.release.xcconfig"; path = "Target Support Files/Pods-MoviesApp/Pods-MoviesApp.release.xcconfig"; sourceTree = "<group>"; };
 		9656D9BE2CB56D7300BA44A5 /* AppInjection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppInjection.swift; sourceTree = "<group>"; };
+		9656D9C12CB577A300BA44A5 /* OfflineMessage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OfflineMessage.swift; sourceTree = "<group>"; };
+		9656D9C42CB57C4900BA44A5 /* NetworkMonitorService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkMonitorService.swift; sourceTree = "<group>"; };
 		966432E32CB038FD0073EA89 /* MoviesApp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = MoviesApp.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		966432E62CB038FD0073EA89 /* MoviesAppApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MoviesAppApp.swift; sourceTree = "<group>"; };
 		966432E82CB038FD0073EA89 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
@@ -169,6 +173,22 @@
 			path = di;
 			sourceTree = "<group>";
 		};
+		9656D9C02CB5779200BA44A5 /* molecules */ = {
+			isa = PBXGroup;
+			children = (
+				9656D9C12CB577A300BA44A5 /* OfflineMessage.swift */,
+			);
+			path = molecules;
+			sourceTree = "<group>";
+		};
+		9656D9C32CB57C3900BA44A5 /* services */ = {
+			isa = PBXGroup;
+			children = (
+				9656D9C42CB57C4900BA44A5 /* NetworkMonitorService.swift */,
+			);
+			path = services;
+			sourceTree = "<group>";
+		};
 		966432DA2CB038FD0073EA89 = {
 			isa = PBXGroup;
 			children = (
@@ -194,6 +214,7 @@
 		966432E52CB038FD0073EA89 /* MoviesApp */ = {
 			isa = PBXGroup;
 			children = (
+				9656D9C32CB57C3900BA44A5 /* services */,
 				9656D9BD2CB56D6000BA44A5 /* di */,
 				966433152CB039920073EA89 /* Data */,
 				966433142CB0398B0073EA89 /* ViewModel */,
@@ -233,6 +254,7 @@
 		966433122CB0393A0073EA89 /* UI */ = {
 			isa = PBXGroup;
 			children = (
+				9656D9C02CB5779200BA44A5 /* molecules */,
 				96F53EB12CB48D6600DE949D /* screens */,
 				967A161D2CB41BD10042B80A /* model */,
 				966432E62CB038FD0073EA89 /* MoviesAppApp.swift */,
@@ -710,6 +732,7 @@
 				967135B12CB096170062E717 /* MoviesDatabaseManager.swift in Sources */,
 				96F53EB52CB48DB100DE949D /* ComingSoonScreen.swift in Sources */,
 				967135B72CB097040062E717 /* MoviesDB.swift in Sources */,
+				9656D9C22CB577A300BA44A5 /* OfflineMessage.swift in Sources */,
 				96F53EB32CB48D9800DE949D /* SearchScreen.swift in Sources */,
 				96D7FC242CB0702B009A9318 /* MoviesServiceProtocol.swift in Sources */,
 				96D7FC262CB07042009A9318 /* MoviesService.swift in Sources */,
@@ -720,6 +743,7 @@
 				96D7FC1D2CB06FDA009A9318 /* MovieDto.swift in Sources */,
 				967A162E2CB426D90042B80A /* MediaViewModel.swift in Sources */,
 				966432E72CB038FD0073EA89 /* MoviesAppApp.swift in Sources */,
+				9656D9C52CB57C4900BA44A5 /* NetworkMonitorService.swift in Sources */,
 				967A16242CB41CBA0042B80A /* MoviesMenu.swift in Sources */,
 				967A16312CB4301F0042B80A /* MovieMapper.swift in Sources */,
 				96F53EB02CB48CF100DE949D /* HomeBar.swift in Sources */,
