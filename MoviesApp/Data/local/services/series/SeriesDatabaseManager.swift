@@ -1,7 +1,8 @@
 import SwiftData
 import SwiftUI
 
-class SeriesDatabaseManager {
+class SeriesDatabaseManager: SeriesDatabaseProtocol {
+    
     let modelContainer: ModelContainer
     let modelExecutor: any ModelExecutor
     let modelContext: ModelContext
@@ -33,22 +34,6 @@ class SeriesDatabaseManager {
                                                         sortBy: [SortDescriptor<SeriesDB>(\.name)])
         let series = try? modelContext.fetch(fetchDescriptor)
         return series ?? []
-    }
-    
-    @MainActor
-    func getSerieById(id: Int64) -> SeriesDB? {
-        let idPredicate = #Predicate<SeriesDB> { serie in
-            serie.id == id
-        }
-        let fetchDescriptor = FetchDescriptor<SeriesDB>(predicate: idPredicate)
-        
-        do {
-            let series = try modelContext.fetch(fetchDescriptor)
-            return series.first
-        } catch {
-            print("Error fetching series by id: \(error)")
-            return nil
-        }
     }
     
 }

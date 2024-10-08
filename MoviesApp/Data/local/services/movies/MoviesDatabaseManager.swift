@@ -2,7 +2,7 @@ import SwiftData
 import SwiftUI
 import Combine
 
-class MoviesDatabaseManager {
+class MoviesDatabaseManager: MoviesDatabaseProtocol {
     let modelContainer: ModelContainer
     let modelExecutor: any ModelExecutor
     let modelContext: ModelContext
@@ -34,22 +34,6 @@ class MoviesDatabaseManager {
                                                      sortBy: [SortDescriptor<MovieDB>(\.title)])
         let movies = try? modelContext.fetch(fetchDescriptor)
         return movies ?? []
-    }
-    
-    @MainActor
-    func getMovieById(id: Int64) -> MovieDB? {
-        let idPredicate = #Predicate<MovieDB> { movie in
-            movie.id == id
-        }
-        let fetchDescriptor = FetchDescriptor<MovieDB>(predicate: idPredicate)
-        
-        do {
-            let movies = try modelContext.fetch(fetchDescriptor)
-            return movies.first
-        } catch {
-            print("Error fetching series by id: \(error)")
-            return nil
-        }
     }
 
 }

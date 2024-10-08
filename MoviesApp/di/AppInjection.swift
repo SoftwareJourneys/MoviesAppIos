@@ -35,13 +35,13 @@ extension Container {
         }.singleton
     }
     
-    var moviesDb: Factory<MoviesDatabaseManager> {
+    var moviesDb: Factory<MoviesDatabaseProtocol> {
         self {
             MoviesDatabaseManager(modelContainer: self.modelContainerService())
         }.singleton
     }
     
-    var seriesDb: Factory<SeriesDatabaseManager> {
+    var seriesDb: Factory<SeriesDatabaseProtocol> {
         self {
             SeriesDatabaseManager(modelContainer: self.modelContainerService())
         }.singleton
