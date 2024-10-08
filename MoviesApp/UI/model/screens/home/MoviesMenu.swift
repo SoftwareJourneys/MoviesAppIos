@@ -9,6 +9,7 @@ import Foundation
 import SwiftUI
 
 struct MoviesMenu: View {
+    @EnvironmentObject var viewModel: MediaViewModel
     var menuTitle: String
     var media: [MediaUI]
     var loadMoreAction: () -> Void
@@ -23,19 +24,21 @@ struct MoviesMenu: View {
                 Spacer()
             }
             ScrollView(.horizontal, showsIndicators: false) {
-                HStack {
-                    ForEach(media) { movie in
-                        MovieView(movie: movie)
-                    }
-                    if(!media.isEmpty){
-                        Button(action: {
-                            loadMoreAction()
-                        }) {
-                            Text("See more")
+                if viewModel.isConnected {
+                    HStack() {
+                        ForEach(media) { movie in
+                            MovieView(movie: movie)
                         }
                     }
+                    .padding(.horizontal)
+                } else {
+                    HStack(spacing: 20) {
+                        ForEach(media) { movie in
+                            MovieView(movie: movie)
+                        }
+                    }
+                    .padding(.horizontal)
                 }
-                .padding(.horizontal)
             }
         }
         .frame(alignment: .topLeading)
