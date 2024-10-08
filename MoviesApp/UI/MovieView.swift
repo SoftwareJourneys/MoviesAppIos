@@ -13,7 +13,7 @@ struct MovieView: View {
 
     var body: some View {
        
-        NavigationLink(destination: DetailedView(previewMovieId: movie.id)) {
+        NavigationLink(destination: DetailedView(previewMovieId: movie.id, isSerie: viewModel.isSerie(movie: movie))) {
             VStack {
                 AsyncImage(url: URL(string: movie.image)) { phase in
                     switch phase {

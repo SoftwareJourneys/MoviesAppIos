@@ -95,6 +95,18 @@ class MediaViewModel: ObservableObject {
                .assign(to: &$isConnected)
        }
     
+    func getMovieById(id: Int) async throws -> MediaUI{
+        return try await mediaRepository.getMovieById(id: id) ?? MediaUI(image: "", title: "", rating: "", date: "")
+    }
+    
+    func getSerieById(id: Int) async throws -> MediaUI{
+        return try await mediaRepository.getSerieById(id: id) ?? MediaUI(image: "", title: "", rating: "", date: "")
+    }
+    
+    func isSerie(movie:MediaUI) -> Bool{
+        return !(!popularSeries.contains(movie) && !topRatedSeries.contains(movie))
+    }
+    
     deinit {
         cancellables.removeAll()
     }

@@ -11,6 +11,7 @@ import SwiftUI
 struct CommonDetailMovie: View{
     var selectedCatalog:MediaUI
     var data:[MediaUI] = []
+    let isSerie:Bool
 
     var body: some View {
         
@@ -42,7 +43,9 @@ struct CommonDetailMovie: View{
                     .frame(height: 2)
                     .background(Color.gray)
                 
-                if Bool.random(){
+                
+                
+                if (self.isSerie){
                     SerieContainer(data: data)
                 }else{
                     MovieContainer(data: data)
