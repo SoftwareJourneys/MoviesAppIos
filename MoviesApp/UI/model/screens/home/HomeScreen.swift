@@ -24,8 +24,6 @@ struct HomeScreen: View {
                     MoviesMenu(menuTitle: "Top rated series", media: viewModel.topRatedSeries)
                     MoviesMenu(menuTitle: "Popular series", media: viewModel.popularSeries)
                 }
-            }.onAppear{
-                viewModel.getMedia()
             }
         }
     }
