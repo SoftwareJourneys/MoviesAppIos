@@ -11,6 +11,7 @@ import SwiftUI
 @MainActor
 struct HomeScreen: View {
 
+
     @EnvironmentObject var viewModel: MediaViewModel
 
     var body: some View {
@@ -23,8 +24,6 @@ struct HomeScreen: View {
                     MoviesMenu(menuTitle: "Top rated series", media: viewModel.topRatedSeries)
                     MoviesMenu(menuTitle: "Popular series", media: viewModel.popularSeries)
                 }
-            }.onAppear{
-                viewModel.getMedia()
             }
         }
     }

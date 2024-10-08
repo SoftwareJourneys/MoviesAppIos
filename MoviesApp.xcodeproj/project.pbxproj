@@ -245,6 +245,7 @@
 		966433022CB038FF0073EA89 /* MoviesAppUITests */ = {
 			isa = PBXGroup;
 			children = (
+				96F53EBE2CB4B78D00DE949D /* MockedData */,
 				966433032CB038FF0073EA89 /* MoviesAppUITests.swift */,
 				966433052CB038FF0073EA89 /* MoviesAppUITestsLaunchTests.swift */,
 			);
@@ -254,14 +255,22 @@
 		966433122CB0393A0073EA89 /* UI */ = {
 			isa = PBXGroup;
 			children = (
+
 				9656D9C02CB5779200BA44A5 /* molecules */,
+
 				96F53EB12CB48D6600DE949D /* screens */,
 				967A161D2CB41BD10042B80A /* model */,
-				966432E62CB038FD0073EA89 /* MoviesAppApp.swift */,
 				966432E82CB038FD0073EA89 /* ContentView.swift */,
+
+				96F53EBC2CB491E300DE949D /* DetailedView.swift */,
+				96F53EAF2CB48CF100DE949D /* HomeBar.swift */,
+				966432E62CB038FD0073EA89 /* MoviesAppApp.swift */,
+				96F53EBA2CB4910600DE949D /* MovieView.swift */,
+
 				96F53EAF2CB48CF100DE949D /* HomeBar.swift */,
 				96F53EBA2CB4910600DE949D /* MovieView.swift */,
 				96F53EBC2CB491E300DE949D /* DetailedView.swift */,
+
 			);
 			path = UI;
 			sourceTree = "<group>";
@@ -463,6 +472,15 @@
 			);
 			name = screens;
 			path = model/screens;
+			sourceTree = "<group>";
+		};
+		96F53EBE2CB4B78D00DE949D /* MockedData */ = {
+			isa = PBXGroup;
+			children = (
+				96F53EBF2CB4B7AF00DE949D /* MockMediaRepository.swift */,
+				96F53EC12CB4B7F900DE949D /* MockedData.swift */,
+			);
+			path = MockedData;
 			sourceTree = "<group>";
 		};
 		A107D0643479D51AB5696C84 /* Frameworks */ = {
@@ -732,6 +750,7 @@
 				967135B12CB096170062E717 /* MoviesDatabaseManager.swift in Sources */,
 				96F53EB52CB48DB100DE949D /* ComingSoonScreen.swift in Sources */,
 				967135B72CB097040062E717 /* MoviesDB.swift in Sources */,
+
 				9656D9C22CB577A300BA44A5 /* OfflineMessage.swift in Sources */,
 				96F53EB32CB48D9800DE949D /* SearchScreen.swift in Sources */,
 				96D7FC242CB0702B009A9318 /* MoviesServiceProtocol.swift in Sources */,
@@ -763,8 +782,10 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				96F53EC22CB4B7F900DE949D /* MockedData.swift in Sources */,
 				966433042CB038FF0073EA89 /* MoviesAppUITests.swift in Sources */,
 				966433062CB038FF0073EA89 /* MoviesAppUITestsLaunchTests.swift in Sources */,
+				96F53EC02CB4B7AF00DE949D /* MockMediaRepository.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

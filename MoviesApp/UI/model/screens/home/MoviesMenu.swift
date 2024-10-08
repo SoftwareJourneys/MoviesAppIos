@@ -22,7 +22,7 @@ struct MoviesMenu: View {
                 Spacer()
             }
             ScrollView(.horizontal, showsIndicators: false) {
-                HStack(spacing: 24) {
+                HStack {
                     ForEach(media) { movie in
                         MovieView(movie: movie)
                     }

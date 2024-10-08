@@ -11,6 +11,7 @@ import SwiftUI
 
 @MainActor
 struct HomeBar: View {
+    @EnvironmentObject var viewModel: MediaViewModel
     var body: some View {
         TabView {
             HomeScreen()
@@ -37,7 +38,8 @@ struct HomeBar: View {
                 .tabItem {
                     Label("More", systemImage: "ellipsis")
                 }
+        }.onAppear{
+            viewModel.getMedia()
         }
-        .accentColor(.white)
     }
 }
