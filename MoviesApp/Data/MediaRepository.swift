@@ -16,12 +16,15 @@ class MediaRepository {
     let moviesDB: MoviesDatabaseProtocol
     let seriesDB: SeriesDatabaseProtocol
     
+    static let shared = MediaRepository(movieService: MoviesService.shared, seriesService: SeriesService.shared, seriesDB: SeriesDatabaseManager.shared,
+                                        moviesDB: MoviesDatabaseManager.shared
+    )
+    
     init(
         movieService: MoviesServiceProtocol,
         seriesService: SeriesServiceProtocol,
         seriesDB: SeriesDatabaseProtocol,
-        moviesDB: MoviesDatabaseProtocol,
-        networkMonitor: NetworkMonitorService
+        moviesDB: MoviesDatabaseProtocol
     ) {
         self.movieService = movieService
         self.seriesService = seriesService

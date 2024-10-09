@@ -33,8 +33,7 @@ class MediaRepositoryTest: XCTestCase {
             movieService: movieService,
             seriesService: seriesService,
             seriesDB: seriesDB,
-            moviesDB: moviesDB,
-            networkMonitor: networkMonitor
+            moviesDB: moviesDB
         )
         
         cancellables = Set<AnyCancellable>()
@@ -52,12 +51,9 @@ class MediaRepositoryTest: XCTestCase {
         super.tearDown()
     }
     
-    func testGetListOfPopularMovies_LocalData() async throws {
+    func testGetListOfPopularMovies_success_network() async throws {
         
         // Given
-        let localMovie = MovieDB(id: 1, adult: false, backdropPath: nil, genreIds: [], originalLanguage: "en", originalTitle: "Local Movie", overview: "Overview", popularity: 10.0, posterPath: nil, releaseDate: "2024-10-08", title: "Local Movie", voteAverage: 8.0, voteCount: 1000, category: "popular")
-        moviesDB.movies = [localMovie]
-        
         let movieDto = MovieDto(
             adult: false,
             backdropPath: nil,
@@ -80,28 +76,40 @@ class MediaRepositoryTest: XCTestCase {
         let expectation = XCTestExpectation(description: "Fetch local movies")
         
         // When
-        repository.getListOfMovies(category: .popular, page: 1)
-            .receive(on: DispatchQueue.main)
-            .sink(receiveCompletion: { completion in
-                if case .failure = completion {
-                    XCTFail("Should not fail")
-                }
-            }, receiveValue: { movies in
-                // Then
-                XCTAssertEqual(movies.count, 1)
-                XCTAssertEqual(movies.first?.title, "Local Movie")
-                expectation.fulfill()
-            })
-            .store(in: &cancellables)
+        let movies = await repository.getListOfMovies(category: .popular, page: 1)
+        
+        XCTAssertEqual(movies.count, 1)
+        XCTAssertEqual(movies.first?.title, "Local Movie")
+        expectation.fulfill()
         
         await fulfillment(of: [expectation], timeout: 2)
     }
     
-    func testGetListOfTopRatedMovies_LocalData() async throws {
+    func testGetListOfPopularMovies_failed_network_send_db() async throws {
         
         // Given
-        let localMovie = MovieDB(id: 1, adult: false, backdropPath: nil, genreIds: [], originalLanguage: "en", originalTitle: "Local Movie", overview: "Overview", popularity: 10.0, posterPath: nil, releaseDate: "2024-10-08", title: "Local Movie", voteAverage: 8.0, voteCount: 1000, category: "popular")
+        let localMovie = MovieDB(id: 1, adult: false, backdropPath: nil, genreIds: [], originalLanguage: "en", originalTitle: "Local Movie", overview: "Overview", popularity: 10.0, posterPath: nil, releaseDate: "2024-10-08", title: "Local DB Movie", voteAverage: 8.0, voteCount: 1000, category: "popular")
+        
         moviesDB.movies = [localMovie]
+        
+        
+        movieService.popularMoviesResult = .failure(URLError(.notConnectedToInternet))
+        
+        let expectation = XCTestExpectation(description: "Fetch local movies")
+        
+        // When
+        let movies = await repository.getListOfMovies(category: .popular, page: 1)
+        
+        XCTAssertEqual(movies.count, 1)
+        XCTAssertEqual(movies.first?.title, "Local DB Movie")
+        expectation.fulfill()
+        
+        await fulfillment(of: [expectation], timeout: 2)
+    }
+    
+    func testGetListOfTopRatedMovies_success_network() async throws {
+        
+        // Given
         
         let movieDto = MovieDto(
             adult: false,
@@ -125,30 +133,38 @@ class MediaRepositoryTest: XCTestCase {
         let expectation = XCTestExpectation(description: "Fetch local movies")
         
         // When
-        repository.getListOfMovies(category: .topRated, page: 1)
-            .receive(on: DispatchQueue.main)
-            .sink(receiveCompletion: { completion in
-                if case .failure = completion {
-                    XCTFail("Should not fail")
-                }
-            }, receiveValue: { movies in
-                // Then
-                XCTAssertEqual(movies.count, 1)
-                XCTAssertEqual(movies.first?.title, "Local Movie")
-                expectation.fulfill()
-            })
-            .store(in: &cancellables)
+        let movies = await repository.getListOfMovies(category: .topRated, page: 1)
+        
+        XCTAssertEqual(movies.count, 1)
+        XCTAssertEqual(movies.first?.title, "Local Movie")
+        expectation.fulfill()
         
         await fulfillment(of: [expectation], timeout: 2)
     }
     
-    func testGetListOfPopularSeries_LocalData() async throws {
+    func testGetListOfTopRatedMovies_failed_network_send_db() async throws {
         
         // Given
-        let localSerie = SeriesDB(id: 1, backdropPath: "/path/to/backdrop.jpg", firstAirDate: "2024-10-08", genreIds: [1, 2], name: "Local Series", originCountry: ["US"], originalLanguage: "en", originalName: "Local Series", overview: "Overview", popularity: 10.0, posterPath: "/path/to/poster.jpg", voteAverage: 8.0, voteCount: 1000, category: "popular")
+        let localMovie = MovieDB(id: 1, adult: false, backdropPath: nil, genreIds: [], originalLanguage: "en", originalTitle: "Local Movie", overview: "Overview", popularity: 10.0, posterPath: nil, releaseDate: "2024-10-08", title: "Local Movie", voteAverage: 8.0, voteCount: 1000, category: "popular")
+        moviesDB.movies = [localMovie]
         
-        seriesDB.series = [localSerie]
+        movieService.topRatedMoviesResult = .failure(URLError(.notConnectedToInternet))
         
+        let expectation = XCTestExpectation(description: "Fetch local movies")
+        
+        // When
+        let movies = await repository.getListOfMovies(category: .topRated, page: 1)
+        
+        XCTAssertEqual(movies.count, 1)
+        XCTAssertEqual(movies.first?.title, "Local Movie")
+        expectation.fulfill()
+        
+        await fulfillment(of: [expectation], timeout: 2)
+    }
+    
+    func testGetListOfPopularSeries_success_network() async throws {
+        
+        // Given
         let seriesDto = SeriesDto(backdropPath: "/path/to/backdrop.jpg", firstAirDate: "2024-10-08", genreIds: [1, 2], id: 1, name: "Local Series", originCountry: ["US"], originalLanguage: "en", originalName: "Local Series", overview: "Overview", popularity: 10.0, posterPath: "/path/to/poster.jpg", voteAverage: 8.0, voteCount: 1000)
         
         seriesService.popularSeriesResult = .success([seriesDto])
@@ -156,29 +172,39 @@ class MediaRepositoryTest: XCTestCase {
         let expectation = XCTestExpectation(description: "Fetch local movies")
         
         // When
-        repository.getListOfSeries(category: .popular, page: 1)
-            .receive(on: DispatchQueue.main)
-            .sink(receiveCompletion: { completion in
-                if case .failure = completion {
-                    XCTFail("Should not fail")
-                }
-            }, receiveValue: { series in
-                // Then
-                XCTAssertEqual(series.count, 1)
-                XCTAssertEqual(series.first?.title, "Local Series")
-                expectation.fulfill()
-            })
-            .store(in: &cancellables)
+        let series = await repository.getListOfSeries(category: .popular, page: 1)
+        
+        XCTAssertEqual(series.count, 1)
+        XCTAssertEqual(series.first?.title, "Local Series")
+        expectation.fulfill()
         
         await fulfillment(of: [expectation], timeout: 2)
     }
     
-    func testGetListOfTopRatedSeries_LocalData() async throws {
+    func testGetListOfPopularSeries_failed_network_send_db() async throws {
         
         // Given
         let localSerie = SeriesDB(id: 1, backdropPath: "/path/to/backdrop.jpg", firstAirDate: "2024-10-08", genreIds: [1, 2], name: "Local Series", originCountry: ["US"], originalLanguage: "en", originalName: "Local Series", overview: "Overview", popularity: 10.0, posterPath: "/path/to/poster.jpg", voteAverage: 8.0, voteCount: 1000, category: "popular")
         
         seriesDB.series = [localSerie]
+        
+        seriesService.popularSeriesResult = .failure(URLError(.notConnectedToInternet))
+        
+        let expectation = XCTestExpectation(description: "Fetch local movies")
+        
+        // When
+        let series = await repository.getListOfSeries(category: .popular, page: 1)
+        
+        XCTAssertEqual(series.count, 1)
+        XCTAssertEqual(series.first?.title, "Local Series")
+        expectation.fulfill()
+        
+        await fulfillment(of: [expectation], timeout: 2)
+    }
+    
+    func testGetListOfTopRatedSeries_success_network() async throws {
+        
+        // Given
         
         let seriesDto = SeriesDto(backdropPath: "/path/to/backdrop.jpg", firstAirDate: "2024-10-08", genreIds: [1, 2], id: 1, name: "Local Series", originCountry: ["US"], originalLanguage: "en", originalName: "Local Series", overview: "Overview", popularity: 10.0, posterPath: "/path/to/poster.jpg", voteAverage: 8.0, voteCount: 1000)
         
@@ -187,19 +213,32 @@ class MediaRepositoryTest: XCTestCase {
         let expectation = XCTestExpectation(description: "Fetch local movies")
         
         // When
-        repository.getListOfSeries(category: .topRated, page: 1)
-            .receive(on: DispatchQueue.main)
-            .sink(receiveCompletion: { completion in
-                if case .failure = completion {
-                    XCTFail("Should not fail")
-                }
-            }, receiveValue: { series in
-                // Then
-                XCTAssertEqual(series.count, 1)
-                XCTAssertEqual(series.first?.title, "Local Series")
-                expectation.fulfill()
-            })
-            .store(in: &cancellables)
+        let series = await repository.getListOfSeries(category: .topRated, page: 1)
+        
+        XCTAssertEqual(series.count, 1)
+        XCTAssertEqual(series.first?.title, "Local Series")
+        expectation.fulfill()
+        
+        await fulfillment(of: [expectation], timeout: 2)
+    }
+    
+    func testGetListOfTopRatedSeries_failed_network_send_db() async throws {
+        
+        // Given
+        let localSerie = SeriesDB(id: 1, backdropPath: "/path/to/backdrop.jpg", firstAirDate: "2024-10-08", genreIds: [1, 2], name: "Local Series", originCountry: ["US"], originalLanguage: "en", originalName: "Local Series", overview: "Overview", popularity: 10.0, posterPath: "/path/to/poster.jpg", voteAverage: 8.0, voteCount: 1000, category: "popular")
+        
+        seriesDB.series = [localSerie]
+        
+        seriesService.topRatedSeriesResult = .failure(URLError(.notConnectedToInternet))
+        
+        let expectation = XCTestExpectation(description: "Fetch local movies")
+        
+        // When
+        let series = await repository.getListOfSeries(category: .topRated, page: 1)
+        
+        XCTAssertEqual(series.count, 1)
+        XCTAssertEqual(series.first?.title, "Local Series")
+        expectation.fulfill()
         
         await fulfillment(of: [expectation], timeout: 2)
     }

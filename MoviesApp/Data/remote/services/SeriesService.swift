@@ -12,6 +12,8 @@ import Alamofire
 class SeriesService: SeriesServiceProtocol {
 
     private let baseURL = APIConstants.baseURL + "/tv"
+    
+    static let shared = SeriesService()
 
 
     func getPopularSeries(page: Int) async throws -> [SeriesDto] {
