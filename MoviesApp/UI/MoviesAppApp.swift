@@ -11,8 +11,7 @@ import Factory
 
 @main
 struct MoviesAppApp: App {
-    @Injected(\.modelContainerService)
-    private var sharedModelContainer
+    private var sharedModelContainer = LocalModelContainer.shared.sharedModelContainer
 
     var body: some Scene {
         WindowGroup {

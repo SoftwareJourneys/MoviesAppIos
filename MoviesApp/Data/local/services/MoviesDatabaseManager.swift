@@ -7,6 +7,8 @@ class MoviesDatabaseManager: MoviesDatabaseProtocol {
     let modelExecutor: any ModelExecutor
     let modelContext: ModelContext
     
+    static let shared = MoviesDatabaseManager(modelContainer: LocalModelContainer.shared.sharedModelContainer)
+    
     init(modelContainer: ModelContainer) {
         self.modelContainer = modelContainer
         modelContext = ModelContext(modelContainer)

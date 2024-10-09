@@ -3,7 +3,6 @@
 
 target 'MoviesApp' do
   pod 'Alamofire'
-  pod 'Factory'
   use_frameworks!
 
   # Pods for MoviesApp

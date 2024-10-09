@@ -7,6 +7,8 @@ class SeriesDatabaseManager: SeriesDatabaseProtocol {
     let modelExecutor: any ModelExecutor
     let modelContext: ModelContext
     
+    static let shared = SeriesDatabaseManager(modelContainer: LocalModelContainer.shared.sharedModelContainer)
+    
     init(modelContainer: ModelContainer) {
         self.modelContainer = modelContainer
         modelContext = ModelContext(modelContainer)
