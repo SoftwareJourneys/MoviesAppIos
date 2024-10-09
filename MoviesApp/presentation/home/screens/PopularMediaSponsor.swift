@@ -29,30 +29,12 @@ struct PopularMediaSponsor: View {
                                 .clipped()
                                 .alignmentGuide(.top) { _ in 0 }
                         case .failure:
-                            VStack {
-                                Image("NetflixLogo")
-                                    .resizable()
-                                    .aspectRatio(contentMode: .fit)
-                                    .frame(width: 100, height: 100)
-                                    .padding(.top, 40)
-                            }
-                            .frame(width: UIScreen.main.bounds.width, height: 300)
-                            .clipped()
-                            .alignmentGuide(.top) { _ in 0 }
+                            NetflixLogoScreen()
                         @unknown default:
                             EmptyView()
                         }
                     } else {
-                        VStack {
-                            Image("NetflixLogo")
-                                .resizable()
-                                .aspectRatio(contentMode: .fit)
-                                .frame(width: 100, height: 100)
-                                .padding(.top, 40)
-                        }
-                        .frame(width: UIScreen.main.bounds.width, height: 300)
-                        .clipped()
-                        .alignmentGuide(.top) { _ in 0 }
+                        NetflixLogoScreen()
                     }
                 }
                 .ignoresSafeArea()
@@ -81,6 +63,13 @@ struct PopularMediaSponsor: View {
                 Spacer()
                 if let movie = movie {
                     Text(movie.title)
+                        .font(.largeTitle)
+                        .bold()
+                        .foregroundColor(.white)
+                        .padding(.bottom, 5)
+                        .accessibilityIdentifier("SponsorMovieTitle")
+                } else {
+                    Text("No title available")
                         .font(.largeTitle)
                         .bold()
                         .foregroundColor(.white)
@@ -117,6 +106,7 @@ struct PopularMediaSponsor: View {
                         .background(Color.white)
                         .cornerRadius(5)
                     }
+                    .accessibilityIdentifier("Play")
                     VStack {
                         Image(systemName: "info.circle")
                             .foregroundColor(.white)
@@ -141,4 +131,3 @@ struct PopularMediaSponsor: View {
         }
     }
 }
-
