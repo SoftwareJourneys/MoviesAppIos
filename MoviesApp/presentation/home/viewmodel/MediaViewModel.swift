@@ -9,6 +9,7 @@ import Foundation
 import Network
 import Combine
 
+@MainActor
 class MediaViewModel: ObservableObject {
     
     private let mediaRepository: MediaRepository = MediaRepository.shared
@@ -43,38 +44,32 @@ class MediaViewModel: ObservableObject {
     func fetchPopularMovies() {
         Task {
             let movies = await mediaRepository.getListOfMovies(category: .popular, page: pagePopularMovies)
+            self.handleMovies(movies, for: \.popularMovies, page: \.pagePopularMovies)
             
-            DispatchQueue.main.async {
-                self.handleMovies(movies, for: \.popularMovies, page: \.pagePopularMovies)
-            }
         }
     }
     
     func fetchTopRatedMovies() {
         Task {
             let movies = await mediaRepository.getListOfMovies(category: .topRated, page: pageTopRatedMovies)
+            self.handleMovies(movies, for: \.topRatedMovies, page: \.pageTopRatedMovies)
             
-            DispatchQueue.main.async {
-                self.handleMovies(movies, for: \.topRatedMovies, page: \.pageTopRatedMovies)
-            }
         }
     }
     
     func fetchPopularSeries() {
         Task {
             let series = await mediaRepository.getListOfSeries(category: .popular, page: pagePopularSeries)
-            DispatchQueue.main.async {
-                self.handleSeries(series, for: \.popularSeries, page: \.pagePopularSeries)
-            }
+            self.handleSeries(series, for: \.popularSeries, page: \.pagePopularSeries)
+            
         }
     }
     
     func fetchTopRatedSeries() {
         Task {
             let series = await mediaRepository.getListOfSeries(category: .topRated, page: pageTopRatedSeries)
-            DispatchQueue.main.async {
-                self.handleSeries(series, for: \.topRatedSeries, page: \.pageTopRatedSeries)
-            }
+            self.handleSeries(series, for: \.topRatedSeries, page: \.pageTopRatedSeries)
+            
         }
     }
     
