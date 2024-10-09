@@ -27,6 +27,7 @@ struct CommonDetailMovie: View{
                 URLImageView(urlString: selectedCatalog.image)
                 HStack(){
                     Text(String(selectedCatalog.rating) + "% Popular").fontWeight(.bold).foregroundStyle(.green)
+                        .accessibilityIdentifier("CommonDetailMovieView")
                     
                     Text(String(selectedCatalog.date).prefix(4)).foregroundStyle(.white)
                    

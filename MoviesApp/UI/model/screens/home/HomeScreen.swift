@@ -32,6 +32,8 @@ struct HomeScreen: View {
                 })
             }
         }
+        .accessibilityIdentifier("HomeScreen")
     }
 }
+
 

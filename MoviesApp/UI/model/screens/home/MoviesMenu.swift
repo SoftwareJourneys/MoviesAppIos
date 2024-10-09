@@ -40,6 +40,7 @@ struct MoviesMenu: View {
                     .padding(.horizontal)
                 }
             }
+            .accessibilityIdentifier("MoviesMenu")
         }
         .frame(alignment: .topLeading)
         .padding()
