@@ -15,7 +15,6 @@ class MediaRepository {
     let seriesService: SeriesServiceProtocol
     let moviesDB: MoviesDatabaseProtocol
     let seriesDB: SeriesDatabaseProtocol
-    let networkMonitor: NetworkMonitorService
     
     init(
         movieService: MoviesServiceProtocol,
@@ -28,26 +27,22 @@ class MediaRepository {
         self.seriesService = seriesService
         self.moviesDB = moviesDB
         self.seriesDB = seriesDB
-        self.networkMonitor = networkMonitor
     }
     
     func getListOfMovies(category: MediaCategory, page: Int) async -> [MediaUI] {
         
-        if networkMonitor.isConnected {
-            do {
-                
-                return try await  handleMovieRemoteSource(category, page)
-                
-            } catch {
-                
-                return await handleMovieLocalSource(category)
-                
-            }
+        do {
             
-        } else {
+            return try await  handleMovieRemoteSource(category, page)
+            
+        } catch {
+            
             return await handleMovieLocalSource(category)
+            
         }
+        
     }
+    
     
     fileprivate func handleMovieRemoteSource(_ category: MediaCategory, _ page: Int) async throws -> [MediaUI] {
         
@@ -106,21 +101,18 @@ class MediaRepository {
     }
     
     func getListOfSeries(category: MediaCategory, page: Int) async -> [MediaUI] {
-        if networkMonitor.isConnected {
-            do {
-                
-                return try await  handleMovieRemoteSource(category, page)
-                
-            } catch {
-                
-                return await handleSerieLocalSource(category)
-                
-            }
+        do {
             
-        } else {
+            return try await  handleMovieRemoteSource(category, page)
+            
+        } catch {
+            
             return await handleSerieLocalSource(category)
+            
         }
+        
     }
+    
     
     fileprivate func handleSerieLocalSource(_ category: MediaCategory) async -> [MediaUI] {
         let localSeries = await seriesDB.getSeriesByCategory(category: category.rawValue)
