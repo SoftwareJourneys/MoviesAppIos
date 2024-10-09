@@ -1,5 +1,5 @@
 //
-//  MovieUI.swift
+//  MediaUI.swift
 //  MoviesApp
 //
 //  Created by Work on 10/7/24.
