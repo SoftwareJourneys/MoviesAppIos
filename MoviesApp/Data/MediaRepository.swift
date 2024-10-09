@@ -103,7 +103,7 @@ class MediaRepository {
     func getListOfSeries(category: MediaCategory, page: Int) async -> [MediaUI] {
         do {
             
-            return try await  handleMovieRemoteSource(category, page)
+            return try await  handleSerieRemoteSource(category, page)
             
         } catch {
             
