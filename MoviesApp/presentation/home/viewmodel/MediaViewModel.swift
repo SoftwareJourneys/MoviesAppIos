@@ -8,7 +8,6 @@
 import Foundation
 import Network
 import Combine
-import Factory
 
 class MediaViewModel: ObservableObject {
     
