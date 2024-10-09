@@ -9,6 +9,7 @@ import Foundation
 import SwiftUI
 
 struct NetflixLogoScreen : View{
+    
     var body: some View {
         VStack {
             Image("NetflixLogo")
