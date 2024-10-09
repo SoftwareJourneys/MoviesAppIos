@@ -17,7 +17,6 @@ class MediaRepository {
     let seriesDB: SeriesDatabaseProtocol
     let networkMonitor: NetworkMonitorService
     
-    
     init(
         movieService: MoviesServiceProtocol,
         seriesService: SeriesServiceProtocol,
@@ -32,50 +31,70 @@ class MediaRepository {
         self.networkMonitor = networkMonitor
     }
     
-    func getListOfMovies(category: MediaCategory, page: Int) -> AnyPublisher<[MediaUI], Error> {
-        let movieSubject = PassthroughSubject<[MediaUI], Error>()
+    func getListOfMovies(category: MediaCategory, page: Int) async -> [MediaUI] {
         
-        Task {
-            var saveIntoDB = false
-            
-            let localMovies = await moviesDB.getMoviesByCategory(category: category.rawValue)
-            
-            if(!localMovies.isEmpty && page == 1){
-                var sortedMovies: [MovieDB] = []
-                switch category{
-                case .popular:
-                    sortedMovies = localMovies.sorted { $0.popularity > $1.popularity }
-                case .topRated:
-                    sortedMovies = localMovies.sorted { $0.voteAverage > $1.voteAverage }
-                }
+        if networkMonitor.isConnected {
+            do {
                 
-                let localMediaUI = moviesDBToMediaUI(localMovies: sortedMovies)
-                movieSubject.send(localMediaUI)
-            } else {
-                saveIntoDB = true
+                return try await  handleMovieRemoteSource(category, page)
+                
+            } catch {
+                
+                return await handleMovieLocalSource(category)
+                
             }
             
-            if networkMonitor.isConnected {
-                do {
-                    let remoteMovies = try await self.getMovies(for: category, page: page)
-                    
-                    if(saveIntoDB){
-                        await self.moviesDB.saveMovies(movies: moviesDTOToMovieDB(remoteMovies: remoteMovies, category: category))
-                    }
-                    
-                    let remoteMediaUI = moviesDTOToMediaUI(remoteMovies: remoteMovies)
-                    movieSubject.send(remoteMediaUI)
-                    movieSubject.send(completion: .finished)
-                } catch {
-                    movieSubject.send(completion: .failure(error))
-                }
-            } else {
-                movieSubject.send(completion: .finished)
-            }
+        } else {
+            return await handleMovieLocalSource(category)
+        }
+    }
+    
+    fileprivate func handleMovieRemoteSource(_ category: MediaCategory, _ page: Int) async throws -> [MediaUI] {
+        
+        let remoteMovies = try await self.getMovies(for: category, page: page)
+        
+        if(page <= 5){
+            await self.moviesDB.saveMovies(movies: remoteMovies.map{ movie in
+                movie.toDb(category: category)
+            })
         }
         
-        return movieSubject.eraseToAnyPublisher()
+        let remoteMediaUI = remoteMovies.map{ movie in
+            movie.toDomain()
+        }
+        
+        return remoteMediaUI
     }
+    
+    
+    
+    fileprivate func handleMovieLocalSource(
+        _ category: MediaCategory
+    ) async -> [MediaUI] {
+        
+        let localMovies = await moviesDB.getMoviesByCategory(category: category.rawValue)
+        
+        if(!localMovies.isEmpty){
+            var sortedMovies: [MovieDB] = []
+            
+            switch category{
+            case .popular:
+                sortedMovies = localMovies.sorted { $0.popularity > $1.popularity }
+            case .topRated:
+                sortedMovies = localMovies.sorted { $0.voteAverage > $1.voteAverage }
+            }
+            
+            let localMediaUI = sortedMovies.map{ movie in
+                movie.toDomain()
+            }
+            
+            return localMediaUI
+        }
+        
+        return []
+    }
+    
+    
     
     private func getMovies(for category: MediaCategory, page: Int) async throws -> [MovieDto] {
         switch category {
@@ -86,49 +105,59 @@ class MediaRepository {
         }
     }
     
-    func getListOfSeries(category: MediaCategory, page: Int)-> AnyPublisher<[MediaUI], Error> {
-        let seriesSubject = PassthroughSubject<[MediaUI], Error>()
+    func getListOfSeries(category: MediaCategory, page: Int) async -> [MediaUI] {
+        if networkMonitor.isConnected {
+            do {
+                
+                return try await  handleMovieRemoteSource(category, page)
+                
+            } catch {
+                
+                return await handleSerieLocalSource(category)
+                
+            }
+            
+        } else {
+            return await handleSerieLocalSource(category)
+        }
+    }
+    
+    fileprivate func handleSerieLocalSource(_ category: MediaCategory) async -> [MediaUI] {
+        let localSeries = await seriesDB.getSeriesByCategory(category: category.rawValue)
         
-        Task {
-            var saveIntoDB = false
+        if(!localSeries.isEmpty){
+            var sortedSeries: [SeriesDB] = []
             
-            let localSeries = await seriesDB.getSeriesByCategory(category: category.rawValue)
-            
-            if(!localSeries.isEmpty && page == 1){
-                var sortedSeries: [SeriesDB] = []
-                
-                switch category{
-                case .popular:
-                    sortedSeries = localSeries.sorted { $0.popularity > $1.popularity }
-                case .topRated:
-                    sortedSeries = localSeries.sorted { $0.voteAverage > $1.voteAverage }
-                }
-                
-                let localMediaUI = seriesDBToMediaUI(localSeries: sortedSeries)
-                seriesSubject.send(localMediaUI)
-            } else {
-                saveIntoDB = true
+            switch category{
+            case .popular:
+                sortedSeries = localSeries.sorted { $0.popularity > $1.popularity }
+            case .topRated:
+                sortedSeries = localSeries.sorted { $0.voteAverage > $1.voteAverage }
             }
             
-            if networkMonitor.isConnected {
-                do {
-                    // Observe network to check if we call remote
-                    let remoteSeries = try await getSeries(for: category, page: page)
-                    if(saveIntoDB){
-                        await seriesDB.saveSeries(series: seriesDTOToMovieDB(remoteSeries: remoteSeries, category: category))
-                    }
-                    let remoteMediaUI = SeriesDTOToMediaUI(remoteSeries: remoteSeries)
-                    seriesSubject.send(remoteMediaUI)
-                    seriesSubject.send(completion: .finished)
-                } catch {
-                    seriesSubject.send(completion: .failure(error))
-                }
-            } else {
-                seriesSubject.send(completion: .finished)
+            let localMediaUI = sortedSeries.map{ serie in
+                serie.toDomain()
             }
+            return localMediaUI
+        }
+        return []
+    }
+    
+    fileprivate func handleSerieRemoteSource(_ category: MediaCategory, _ page: Int) async throws -> [MediaUI] {
+        let remoteSeries = try await self.getSeries(for: category, page: page)
+        
+        if(page <= 5){
+            await self.seriesDB.saveSeries(
+                series: remoteSeries.map{ serie in
+                    serie.toDb(category: category)
+                }
+            )
         }
         
-        return seriesSubject.eraseToAnyPublisher()
+        let remoteMediaUI = remoteSeries.map{ serie in
+            serie.toDomain()
+        }
+        return remoteMediaUI
     }
     
     private func getSeries(for category: MediaCategory, page: Int) async throws -> [SeriesDto] {
