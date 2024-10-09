@@ -1,10 +1,3 @@
-//
-//  MoviesMenu.swift
-//  MoviesApp
-//
-//  Created by Work on 10/7/24.
-//
-
 import Foundation
 import SwiftUI
 
@@ -16,14 +9,30 @@ struct MoviesMenu: View {
     
     var body: some View {
         VStack {
-            HeaderMenuTitle(menuTitle: menuTitle)
+            HStack {
+                Text(menuTitle)
+                    .bold()
+                    .font(.title2)
+                    .foregroundColor(.white)
+                Spacer()
+            }
             ScrollView(.horizontal, showsIndicators: false) {
                 if viewModel.isConnected {
                     HStack() {
                         ForEach(media) { movie in
                             MovieView(movie: movie)
                         }
+                        Button(action: {
+                            loadMoreAction()
+                        }) {
+                            Image(systemName: "arrow.right")
+                                .font(.system(size: 40))
+                                .padding()
+                                .shadow(color: Color.black.opacity(0.2), radius: 5, x: 0, y: 2)
+                        }
+                        .padding(.horizontal)
                     }
+                    
                     .padding(.horizontal)
                 } else {
                     HStack(spacing: 20) {

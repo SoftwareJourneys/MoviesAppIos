@@ -11,12 +11,14 @@ import SwiftData
 @main
 struct MoviesAppApp: App {
     private var sharedModelContainer = LocalModelContainer.shared.sharedModelContainer
-
+    
     var body: some Scene {
         WindowGroup {
             ContentView()
                 .preferredColorScheme(.dark)
+                .accentColor(.red)
         }
         .modelContainer(sharedModelContainer)
     }
 }
+
