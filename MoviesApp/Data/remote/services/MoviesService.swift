@@ -11,6 +11,8 @@ import Alamofire
 class MoviesService: MoviesServiceProtocol {
 
     private let baseURL = APIConstants.baseURL + "/movie"
+    
+    static let shared = MoviesService()
 
 
     func getPopularMovies(page: Int)async throws -> [MovieDto] {

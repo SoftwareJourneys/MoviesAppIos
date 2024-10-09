@@ -13,6 +13,8 @@ class NetworkMonitorService: ObservableObject {
     private let monitor: NWPathMonitor
     private let queue = DispatchQueue(label: "NetworkMonitorQueue")
     @Published private(set) var isConnected = false
+    
+    static let shared = NetworkMonitorService()
 
     init() {
         monitor = NWPathMonitor()

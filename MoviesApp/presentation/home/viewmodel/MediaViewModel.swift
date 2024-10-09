@@ -12,8 +12,8 @@ import Factory
 
 class MediaViewModel: ObservableObject {
     
-    @Injected(\.mediaRepository) private var mediaRepository: MediaRepository
-    @Injected(\.networkMonitoring) private var networkMonitor: NetworkMonitorService
+    private let mediaRepository: MediaRepository = MediaRepository.shared
+    private let networkMonitor: NetworkMonitorService = NetworkMonitorService.shared
     
     private var cancellables = Set<AnyCancellable>()
     
