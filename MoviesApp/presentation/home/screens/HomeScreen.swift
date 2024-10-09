@@ -18,16 +18,16 @@ struct HomeScreen: View {
         NavigationView {
             ScrollView {
                 PopularMediaSponsor(movie: viewModel.popularMovies.first)
-                MoviesMenu(menuTitle: "Top rated movies", media: viewModel.topRatedMovies, loadMoreAction: {
+                MediaList(menuTitle: "Top rated movies", media: viewModel.topRatedMovies, loadMoreAction: {
                     viewModel.fetchTopRatedMovies()
                 })
-                MoviesMenu(menuTitle: "Popular Movies", media: viewModel.popularMovies, loadMoreAction: {
+                MediaList(menuTitle: "Popular Movies", media: viewModel.popularMovies, loadMoreAction: {
                     viewModel.fetchPopularMovies()
                 })
-                MoviesMenu(menuTitle: "Top rated series", media: viewModel.topRatedSeries, loadMoreAction: {
+                MediaList(menuTitle: "Top rated series", media: viewModel.topRatedSeries, loadMoreAction: {
                     viewModel.fetchTopRatedSeries()
                 })
-                MoviesMenu(menuTitle: "Popular series", media: viewModel.popularSeries, loadMoreAction: {
+                MediaList(menuTitle: "Popular series", media: viewModel.popularSeries, loadMoreAction: {
                     viewModel.fetchPopularSeries()
                 })
             }

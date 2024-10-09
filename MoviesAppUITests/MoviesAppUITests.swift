@@ -43,7 +43,7 @@ final class MoviesAppUITests: XCTestCase {
 
     func testMoviesMenuLaunches() throws {
         app.launch()
-        XCTAssertTrue(app.scrollViews["MoviesMenu"].exists)
+        XCTAssertTrue(app.scrollViews["MediaList"].exists)
     }
 
     func testPopularMediaSponsorLaunches() throws{
@@ -83,7 +83,7 @@ final class MoviesAppUITests: XCTestCase {
 
     func testMovieTitleExists() throws {
         app.launch()
-        let movieTitle = app.staticTexts["SponsorMovieTitle"]
+        let movieTitle = app.otherElements["SponsorMovieTitle"]
         XCTAssertTrue(movieTitle.exists, "The movie title is not being displayed.")
     }
     

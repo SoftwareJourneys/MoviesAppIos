@@ -1,5 +1,5 @@
 //
-//  HeaderMenuTitle.swift
+//  SponsorMovieTitle.swift
 //  MoviesApp
 //
 //  Created by Work on 9/10/24.
@@ -8,17 +8,16 @@
 import Foundation
 import SwiftUI
 
-struct HeaderMenuTitle: View {
+struct SponsorMovieTitle : View {
     
-    var menuTitle: String
+    var title: String
     var body: some View {
         HStack {
-            Text(menuTitle)
+            Text(title)
+                .font(.largeTitle)
                 .bold()
-                .font(.title2)
                 .foregroundColor(.white)
-                .accessibilityIdentifier("MenuTitle")
-            Spacer()
+                .padding(.bottom, 5)
         }
     }
 }

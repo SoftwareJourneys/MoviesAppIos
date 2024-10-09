@@ -46,15 +46,9 @@ struct PopularMediaSponsor: View {
                         .resizable()
                         .aspectRatio(contentMode: .fit)
                         .frame(width: 40, height: 40)
-                    Text("TV Shows")
-                        .foregroundColor(.white)
-                        .padding(.leading, 30)
-                    Text("Movies")
-                        .foregroundColor(.white)
-                        .padding(.leading, 30)
-                    Text("My List")
-                        .foregroundColor(.white)
-                        .padding(.leading, 30)
+                    MediaCategoryStaticText(title: "TV Shows")
+                    MediaCategoryStaticText(title: "Movies")
+                    MediaCategoryStaticText(title: "My List")
                     Spacer()
                 }
                 .frame(maxWidth: .infinity)
@@ -62,18 +56,10 @@ struct PopularMediaSponsor: View {
 
                 Spacer()
                 if let movie = movie {
-                    Text(movie.title)
-                        .font(.largeTitle)
-                        .bold()
-                        .foregroundColor(.white)
-                        .padding(.bottom, 5)
+                    SponsorMovieTitle(title: movie.title)
                         .accessibilityIdentifier("SponsorMovieTitle")
                 } else {
-                    Text("No title available")
-                        .font(.largeTitle)
-                        .bold()
-                        .foregroundColor(.white)
-                        .padding(.bottom, 5)
+                    SponsorMovieTitle(title: "No title available")
                 }
                 Text("TV shows")
                     .font(.subheadline)
@@ -81,13 +67,7 @@ struct PopularMediaSponsor: View {
                     .padding(.bottom, 10)
 
                 HStack(spacing: 40) {
-                    VStack {
-                        Image(systemName: "checkmark")
-                            .foregroundColor(.white)
-                        Text("My List")
-                            .font(.caption)
-                            .foregroundColor(.white)
-                    }
+                    MediaSponsorLabeledIcon(iconName: "checkmark", title: "My List")
                     Button(action: {
                         showAlert = true
                         DispatchQueue.main.asyncAfter(deadline: .now() + 3) {
@@ -107,13 +87,7 @@ struct PopularMediaSponsor: View {
                         .cornerRadius(5)
                     }
                     .accessibilityIdentifier("Play")
-                    VStack {
-                        Image(systemName: "info.circle")
-                            .foregroundColor(.white)
-                        Text("Info")
-                            .font(.caption)
-                            .foregroundColor(.white)
-                    }
+                    MediaSponsorLabeledIcon(iconName: "info.circle", title: "Info")
                 }
                 .padding(.bottom, 30)
             }
