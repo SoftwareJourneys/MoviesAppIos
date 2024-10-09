@@ -8,9 +8,9 @@
 import Foundation
 import SwiftUI
 
-struct MovieImageViewOnline: View {
+struct MediaImageViewOnline: View {
+    
     var image: Image
-
     var body: some View {
         image
             .resizable()
