@@ -16,13 +16,7 @@ struct MoviesMenu: View {
     
     var body: some View {
         VStack {
-            HStack {
-                Text(menuTitle)
-                    .bold()
-                    .font(.title2)
-                    .foregroundColor(.white)
-                Spacer()
-            }
+            HeaderMenuTitle(menuTitle: menuTitle)
             ScrollView(.horizontal, showsIndicators: false) {
                 if viewModel.isConnected {
                     HStack() {

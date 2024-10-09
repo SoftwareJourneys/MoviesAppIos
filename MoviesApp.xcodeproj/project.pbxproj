@@ -54,8 +54,12 @@
 		96D7FC262CB07042009A9318 /* MoviesService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 96D7FC252CB07042009A9318 /* MoviesService.swift */; };
 		96D7FC292CB0708D009A9318 /* SeriesServiceProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 96D7FC282CB0708D009A9318 /* SeriesServiceProtocol.swift */; };
 		96D7FC2B2CB070A1009A9318 /* SeriesService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 96D7FC2A2CB070A1009A9318 /* SeriesService.swift */; };
-		96D865852CB6E98B008E4350 /* MockedData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 96D865842CB6E98B008E4350 /* MockedData.swift */; };
 		96D865872CB6E9BA008E4350 /* NetflixLogoScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = 96D865862CB6E9BA008E4350 /* NetflixLogoScreen.swift */; };
+		96D865882CB6F200008E4350 /* MockMediaUI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 96D865842CB6E98B008E4350 /* MockMediaUI.swift */; };
+		96D8658A2CB70E6E008E4350 /* NoAvailableImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 96D865892CB70E6E008E4350 /* NoAvailableImage.swift */; };
+		96D8658D2CB71712008E4350 /* HeaderMenuTitle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 96D8658C2CB71712008E4350 /* HeaderMenuTitle.swift */; };
+		96D8658F2CB718F9008E4350 /* MovieTitleViewOffline.swift in Sources */ = {isa = PBXBuildFile; fileRef = 96D8658E2CB718F9008E4350 /* MovieTitleViewOffline.swift */; };
+		96D865912CB719E9008E4350 /* MovieImageViewOnline.swift in Sources */ = {isa = PBXBuildFile; fileRef = 96D865902CB719E9008E4350 /* MovieImageViewOnline.swift */; };
 		96F52EE52CB5CCD3008A6496 /* CustomAlert.swift in Sources */ = {isa = PBXBuildFile; fileRef = 96F52EE42CB5CCD3008A6496 /* CustomAlert.swift */; };
 		96F53EB02CB48CF100DE949D /* HomeBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 96F53EAF2CB48CF100DE949D /* HomeBar.swift */; };
 		96F53EB32CB48D9800DE949D /* SearchScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = 96F53EB22CB48D9800DE949D /* SearchScreen.swift */; };
@@ -141,8 +145,12 @@
 		96D7FC252CB07042009A9318 /* MoviesService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MoviesService.swift; sourceTree = "<group>"; };
 		96D7FC282CB0708D009A9318 /* SeriesServiceProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SeriesServiceProtocol.swift; sourceTree = "<group>"; };
 		96D7FC2A2CB070A1009A9318 /* SeriesService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SeriesService.swift; sourceTree = "<group>"; };
-		96D865842CB6E98B008E4350 /* MockedData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = MockedData.swift; path = MoviesApp/UI/molecules/MockedData.swift; sourceTree = SOURCE_ROOT; };
+		96D865842CB6E98B008E4350 /* MockMediaUI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = MockMediaUI.swift; path = MoviesAppTests/mocks/MockMediaUI.swift; sourceTree = SOURCE_ROOT; };
 		96D865862CB6E9BA008E4350 /* NetflixLogoScreen.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetflixLogoScreen.swift; sourceTree = "<group>"; };
+		96D865892CB70E6E008E4350 /* NoAvailableImage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NoAvailableImage.swift; sourceTree = "<group>"; };
+		96D8658C2CB71712008E4350 /* HeaderMenuTitle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HeaderMenuTitle.swift; sourceTree = "<group>"; };
+		96D8658E2CB718F9008E4350 /* MovieTitleViewOffline.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MovieTitleViewOffline.swift; sourceTree = "<group>"; };
+		96D865902CB719E9008E4350 /* MovieImageViewOnline.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MovieImageViewOnline.swift; sourceTree = "<group>"; };
 		96F52EE42CB5CCD3008A6496 /* CustomAlert.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomAlert.swift; sourceTree = "<group>"; };
 		96F53EAF2CB48CF100DE949D /* HomeBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeBar.swift; sourceTree = "<group>"; };
 		96F53EB22CB48D9800DE949D /* SearchScreen.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchScreen.swift; sourceTree = "<group>"; };
@@ -371,7 +379,7 @@
 				9656D9C12CB577A300BA44A5 /* OfflineMessage.swift */,
 				96F52EE42CB5CCD3008A6496 /* CustomAlert.swift */,
 				968C4ED52CB5A13E00565C15 /* ErrorMessage.swift */,
-				96D865862CB6E9BA008E4350 /* NetflixLogoScreen.swift */,
+				96D865892CB70E6E008E4350 /* NoAvailableImage.swift */,
 			);
 			path = molecules;
 			sourceTree = "<group>";
@@ -400,6 +408,7 @@
 				9656D9CE2CB5CF6100BA44A5 /* MockMoviesDatabaseManager.swift */,
 				9656D9D02CB5CF8100BA44A5 /* MockSeriesService.swift */,
 				9656D9D32CB5CF9F00BA44A5 /* MockMovieService.swift */,
+				96D865842CB6E98B008E4350 /* MockMediaUI.swift */,
 			);
 			path = mocks;
 			sourceTree = "<group>";
@@ -463,7 +472,6 @@
 		966433022CB038FF0073EA89 /* MoviesAppUITests */ = {
 			isa = PBXGroup;
 			children = (
-				96F53EBE2CB4B78D00DE949D /* MockedData */,
 				966433032CB038FF0073EA89 /* MoviesAppUITests.swift */,
 				966433052CB038FF0073EA89 /* MoviesAppUITestsLaunchTests.swift */,
 			);
@@ -473,6 +481,7 @@
 		966433122CB0393A0073EA89 /* UI */ = {
 			isa = PBXGroup;
 			children = (
+				96D8658B2CB71674008E4350 /* atoms */,
 				9656D9C02CB5779200BA44A5 /* molecules */,
 				966432E82CB038FD0073EA89 /* ContentView.swift */,
 				966432E62CB038FD0073EA89 /* MoviesAppApp.swift */,
@@ -559,12 +568,15 @@
 			path = services;
 			sourceTree = "<group>";
 		};
-		96F53EBE2CB4B78D00DE949D /* MockedData */ = {
+		96D8658B2CB71674008E4350 /* atoms */ = {
 			isa = PBXGroup;
 			children = (
-				96D865842CB6E98B008E4350 /* MockedData.swift */,
+				96D865862CB6E9BA008E4350 /* NetflixLogoScreen.swift */,
+				96D8658C2CB71712008E4350 /* HeaderMenuTitle.swift */,
+				96D8658E2CB718F9008E4350 /* MovieTitleViewOffline.swift */,
+				96D865902CB719E9008E4350 /* MovieImageViewOnline.swift */,
 			);
-			path = MockedData;
+			path = atoms;
 			sourceTree = "<group>";
 		};
 		A107D0643479D51AB5696C84 /* Frameworks */ = {
@@ -825,6 +837,7 @@
 				967A16222CB41C620042B80A /* HomeScreen.swift in Sources */,
 				968C4ED62CB5A13E00565C15 /* ErrorMessage.swift in Sources */,
 				96D7FC292CB0708D009A9318 /* SeriesServiceProtocol.swift in Sources */,
+				96D8658F2CB718F9008E4350 /* MovieTitleViewOffline.swift in Sources */,
 				96D0CDC72CB5768100908944 /* CommonTrailer.swift in Sources */,
 				96D0CDCE2CB576CC00908944 /* SerieContainer.swift in Sources */,
 				967A161F2CB41BE20042B80A /* MediaUI.swift in Sources */,
@@ -837,9 +850,11 @@
 				967A162C2CB424030042B80A /* MediaCategory.swift in Sources */,
 				96F53EB72CB48DCD00DE949D /* DownloadsScreen.swift in Sources */,
 				96D7FC1A2CB06FB6009A9318 /* ResponseDto.swift in Sources */,
+				96D8658A2CB70E6E008E4350 /* NoAvailableImage.swift in Sources */,
 				967135B12CB096170062E717 /* MoviesDatabaseManager.swift in Sources */,
 				96D0CDC32CB5765B00908944 /* CompanionStrings.swift in Sources */,
 				96F53EB52CB48DB100DE949D /* ComingSoonScreen.swift in Sources */,
+				96D865912CB719E9008E4350 /* MovieImageViewOnline.swift in Sources */,
 				967135B72CB097040062E717 /* MoviesDB.swift in Sources */,
 				9656D9C22CB577A300BA44A5 /* OfflineMessage.swift in Sources */,
 				96F53EB32CB48D9800DE949D /* SearchScreen.swift in Sources */,
@@ -847,6 +862,7 @@
 				96D0CDC52CB5767300908944 /* CommonDetailMovie.swift in Sources */,
 				96D7FC262CB07042009A9318 /* MoviesService.swift in Sources */,
 				9656D9BF2CB56D7300BA44A5 /* AppInjection.swift in Sources */,
+				96D8658D2CB71712008E4350 /* HeaderMenuTitle.swift in Sources */,
 				967135B32CB096530062E717 /* SeriesDatabaseManager.swift in Sources */,
 				967A16262CB41CE40042B80A /* PopularMediaSponsor.swift in Sources */,
 				96D7FC1D2CB06FDA009A9318 /* MovieDto.swift in Sources */,
@@ -869,6 +885,7 @@
 				9656D9CF2CB5CF6100BA44A5 /* MockMoviesDatabaseManager.swift in Sources */,
 				9656D9D12CB5CF8100BA44A5 /* MockSeriesService.swift in Sources */,
 				9656D9C82CB5CDC600BA44A5 /* MediaRepositoryTest.swift in Sources */,
+				96D865882CB6F200008E4350 /* MockMediaUI.swift in Sources */,
 				9656D9D42CB5CF9F00BA44A5 /* MockMovieService.swift in Sources */,
 				966432FA2CB038FF0073EA89 /* MoviesAppTests.swift in Sources */,
 				9656D9CD2CB5CF3C00BA44A5 /* MockSeriesDatabaseManager.swift in Sources */,
@@ -881,7 +898,6 @@
 			files = (
 				966433042CB038FF0073EA89 /* MoviesAppUITests.swift in Sources */,
 				966433062CB038FF0073EA89 /* MoviesAppUITestsLaunchTests.swift in Sources */,
-				96D865852CB6E98B008E4350 /* MockedData.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1092,6 +1108,7 @@
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = CUVAQFM242;
 				GENERATE_INFOPLIST_FILE = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 17.4;
 				MARKETING_VERSION = 1.0;
@@ -1112,6 +1129,7 @@
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = CUVAQFM242;
 				GENERATE_INFOPLIST_FILE = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 17.4;
 				MARKETING_VERSION = 1.0;
@@ -1131,6 +1149,7 @@
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = CUVAQFM242;
 				GENERATE_INFOPLIST_FILE = YES;
 				MARKETING_VERSION = 1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = "nestor-diazgranados.MoviesAppUITests";
@@ -1149,6 +1168,7 @@
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = CUVAQFM242;
 				GENERATE_INFOPLIST_FILE = YES;
 				MARKETING_VERSION = 1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = "nestor-diazgranados.MoviesAppUITests";

@@ -54,7 +54,6 @@ struct DownloadsScreen: View {
                                         .frame(width: 150)
                                     
                                     Button(action: {
-                                        print("Delete download: \(movie.title)")
                                     }) {
                                         HStack {
                                             Image(systemName: "trash")
@@ -76,7 +75,8 @@ struct DownloadsScreen: View {
             .navigationBarHidden(true)
         }
         .onAppear {
-            viewModel.getMedia()        }
+            viewModel.getMedia()
+        }
     }
     
     func getDownloadedMovies() -> [DownloadedMovie] {

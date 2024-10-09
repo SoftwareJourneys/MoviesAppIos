@@ -17,38 +17,11 @@ struct MovieView: View {
             VStack {
                 AsyncImage(url: URL(string: movie.image)) { phase in
                     if let image = phase.image {
-                        image
-                            .resizable()
-                            .aspectRatio(contentMode: .fill)
-                            .frame(width: 100, height: 160)
-                            .clipShape(Rectangle())
-
+                        MovieImageViewOnline(image: image)
                     } else if phase.error != nil {
                         VStack {
-                            ZStack {
-                                Image(systemName: "photo")
-                                    .resizable()
-                                    .aspectRatio(contentMode: .fit)
-                                    .frame(width: 80, height: 70)
-                                    .foregroundColor(.gray)
-
-                                Image(systemName: "xmark.circle.fill")
-                                    .resizable()
-                                    .aspectRatio(contentMode: .fit)
-                                    .frame(width: 30, height: 30)
-                                    .foregroundColor(.red)
-                                    .offset(x: 35, y: -30)
-                            }
-                            .frame(width: 100, height: 100)
-
-                            if !viewModel.isConnected {
-                                Text(movie.title)
-                                    .font(.caption)
-                                    .foregroundColor(.white)
-                                    .lineLimit(1)
-                                    .truncationMode(.tail)
-                                    .frame(width: 100)
-                            }
+                            NoAvailableImageView()
+                            MovieTitleViewOffline(title : movie.title)
                         }
                     } else {
                         ProgressView()
