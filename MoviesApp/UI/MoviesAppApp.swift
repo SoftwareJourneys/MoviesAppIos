@@ -7,7 +7,6 @@
 
 import SwiftUI
 import SwiftData
-import Factory
 
 @main
 struct MoviesAppApp: App {
