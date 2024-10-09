@@ -14,8 +14,8 @@ struct PopularMediaSponsor: View {
 
     var body: some View {
         ZStack {
-            if let movie = movie, let imageUrl = URL(string: movie.image) {
-                AsyncImage(url: imageUrl) { phase in
+            if let movie = movie, let image = URL(string: movie.image) {
+                AsyncImage(url: image) { phase in
                     if viewModel.isConnected {
                         switch phase {
                         case .empty:
