@@ -39,7 +39,9 @@ struct CustomAlert: View {
                         Text(confirmText)
                             .background(Color.black)
                             .foregroundColor(.white)
-                    }                }
+                    }
+                    .accessibilityIdentifier("PlayAlertButton")
+                }
                 .padding()
                 .background(Color.black)
                 .cornerRadius(20)

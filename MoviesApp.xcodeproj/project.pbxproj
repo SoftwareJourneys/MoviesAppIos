@@ -54,6 +54,8 @@
 		96D7FC262CB07042009A9318 /* MoviesService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 96D7FC252CB07042009A9318 /* MoviesService.swift */; };
 		96D7FC292CB0708D009A9318 /* SeriesServiceProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 96D7FC282CB0708D009A9318 /* SeriesServiceProtocol.swift */; };
 		96D7FC2B2CB070A1009A9318 /* SeriesService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 96D7FC2A2CB070A1009A9318 /* SeriesService.swift */; };
+		96D865852CB6E98B008E4350 /* MockedData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 96D865842CB6E98B008E4350 /* MockedData.swift */; };
+		96D865872CB6E9BA008E4350 /* NetflixLogoScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = 96D865862CB6E9BA008E4350 /* NetflixLogoScreen.swift */; };
 		96F52EE52CB5CCD3008A6496 /* CustomAlert.swift in Sources */ = {isa = PBXBuildFile; fileRef = 96F52EE42CB5CCD3008A6496 /* CustomAlert.swift */; };
 		96F53EB02CB48CF100DE949D /* HomeBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 96F53EAF2CB48CF100DE949D /* HomeBar.swift */; };
 		96F53EB32CB48D9800DE949D /* SearchScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = 96F53EB22CB48D9800DE949D /* SearchScreen.swift */; };
@@ -139,6 +141,8 @@
 		96D7FC252CB07042009A9318 /* MoviesService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MoviesService.swift; sourceTree = "<group>"; };
 		96D7FC282CB0708D009A9318 /* SeriesServiceProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SeriesServiceProtocol.swift; sourceTree = "<group>"; };
 		96D7FC2A2CB070A1009A9318 /* SeriesService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SeriesService.swift; sourceTree = "<group>"; };
+		96D865842CB6E98B008E4350 /* MockedData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = MockedData.swift; path = MoviesApp/UI/molecules/MockedData.swift; sourceTree = SOURCE_ROOT; };
+		96D865862CB6E9BA008E4350 /* NetflixLogoScreen.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetflixLogoScreen.swift; sourceTree = "<group>"; };
 		96F52EE42CB5CCD3008A6496 /* CustomAlert.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomAlert.swift; sourceTree = "<group>"; };
 		96F53EAF2CB48CF100DE949D /* HomeBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeBar.swift; sourceTree = "<group>"; };
 		96F53EB22CB48D9800DE949D /* SearchScreen.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchScreen.swift; sourceTree = "<group>"; };
@@ -367,6 +371,7 @@
 				9656D9C12CB577A300BA44A5 /* OfflineMessage.swift */,
 				96F52EE42CB5CCD3008A6496 /* CustomAlert.swift */,
 				968C4ED52CB5A13E00565C15 /* ErrorMessage.swift */,
+				96D865862CB6E9BA008E4350 /* NetflixLogoScreen.swift */,
 			);
 			path = molecules;
 			sourceTree = "<group>";
@@ -557,6 +562,7 @@
 		96F53EBE2CB4B78D00DE949D /* MockedData */ = {
 			isa = PBXGroup;
 			children = (
+				96D865842CB6E98B008E4350 /* MockedData.swift */,
 			);
 			path = MockedData;
 			sourceTree = "<group>";
@@ -827,6 +833,7 @@
 				967A16332CB430690042B80A /* SeriesMapper.swift in Sources */,
 				96F53EBB2CB4910600DE949D /* MovieView.swift in Sources */,
 				96D7FC2B2CB070A1009A9318 /* SeriesService.swift in Sources */,
+				96D865872CB6E9BA008E4350 /* NetflixLogoScreen.swift in Sources */,
 				967A162C2CB424030042B80A /* MediaCategory.swift in Sources */,
 				96F53EB72CB48DCD00DE949D /* DownloadsScreen.swift in Sources */,
 				96D7FC1A2CB06FB6009A9318 /* ResponseDto.swift in Sources */,
@@ -874,6 +881,7 @@
 			files = (
 				966433042CB038FF0073EA89 /* MoviesAppUITests.swift in Sources */,
 				966433062CB038FF0073EA89 /* MoviesAppUITestsLaunchTests.swift in Sources */,
+				96D865852CB6E98B008E4350 /* MockedData.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1029,8 +1037,8 @@
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
-				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
-				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -1061,8 +1069,8 @@
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
-				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
-				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",

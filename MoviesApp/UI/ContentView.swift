@@ -24,6 +24,7 @@ struct ContentView: View {
             }
         }
         .environmentObject(mediaViewModel)
+        .accessibilityIdentifier("ContentView")
     }
 }
 
