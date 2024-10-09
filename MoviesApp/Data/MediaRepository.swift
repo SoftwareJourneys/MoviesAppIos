@@ -17,12 +17,6 @@ class MediaRepository {
     let seriesDB: SeriesDatabaseProtocol
     let networkMonitor: NetworkMonitorService
     
-    
-    var moviePopular = PassthroughSubject<[MediaUI], Error>()
-    var movieTopRated = PassthroughSubject<[MediaUI], Error>()
-    var seriesPopular = PassthroughSubject<[MediaUI], Error>()
-    var seriesTopRated = PassthroughSubject<[MediaUI], Error>()
-    
     init(
         movieService: MoviesServiceProtocol,
         seriesService: SeriesServiceProtocol,
