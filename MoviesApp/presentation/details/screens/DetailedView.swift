@@ -2,12 +2,14 @@
 //  DetailedView.swift
 //  MoviesApp
 //
-//  Created by Work on 7/10/24.
+//  Created by Work on 10/9/24.
 //
+
+import Foundation
 
 import SwiftUI
 import Foundation
-
+ 
 struct DetailedView: View {
     
     @State private var selectedIndex: Int = 0
@@ -15,7 +17,7 @@ struct DetailedView: View {
     let previewMovieId:Int
     let isSerie:Bool
     @State private var selectedCatalog: MediaUI?
-
+ 
     var body: some View {
             NavigationStack() {
                 if let catalog = selectedCatalog {
@@ -44,6 +46,7 @@ struct DetailedView: View {
             UITabBar.appearance().backgroundColor = .systemGray4.withAlphaComponent(0.4)
             UINavigationBar.appearance().largeTitleTextAttributes = [.foregroundColor: UIColor.systemPink]
         })
+        
     }
     
 }
